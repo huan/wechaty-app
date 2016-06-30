@@ -1,13 +1,13 @@
 import { bootstrap }            from '@angular/platform-browser-dynamic'
 import { HTTP_PROVIDERS }       from '@angular/http'
 
-import { WechatyComponent }     from './wechaty.component'
+import { AppComponent }         from './app.component'
 import { APP_ROUTES_PROVIDERS } from './app.routes'
 
 bootstrap(
-  WechatyComponent
+  AppComponent
   , [
-    APP_ROUTES_PROVIDERS
-    , HTTP_PROVIDERS
+    HTTP_PROVIDERS
+    // , APP_ROUTES_PROVIDERS
   ]
 )

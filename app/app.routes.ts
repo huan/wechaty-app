@@ -14,11 +14,11 @@ const routes: RouterConfig = [
   //   path: 'dashboard'
   //   , component: DashboardComponent
   // }
-  , {
-    path: ''
-    , redirectTo: '/wechaty'
-    // , terminal: true
-  }
+  // , {
+  //   path: ''
+  //   , redirectTo: '/wechaty'
+  //   // , terminal: true
+  // }
 ]
 
 export const APP_ROUTES_PROVIDERS = [

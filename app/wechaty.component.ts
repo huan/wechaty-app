@@ -13,23 +13,25 @@ import {
   , selector: 'wechaty'
   , inputs: ['token']
   , templateUrl: 'wechaty.component.html'
-  , styleUrls: ['wechaty.component.css']
+  // , styleUrls: ['wechaty.component.css']
   // , encapsulation: ViewEncapsulation.None
   , changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class WechatyComponent implements OnInit, OnDestroy {
-  @Output() message:    EventEmitter<string>
-  @Output() scan:       EventEmitter<string>
-  @Output() login:      EventEmitter<string>
-  @Output() logout:     EventEmitter<string>
-  @Output() error:      EventEmitter<string>
-  @Output() heartbeat:  EventEmitter<string>
+  @Output() message   = new EventEmitter()
+  @Output() scan      = new EventEmitter()
+  @Output() login     = new EventEmitter()
+  @Output() logout    = new EventEmitter()
+  @Output() error     = new EventEmitter()
+  @Output() heartbeat = new EventEmitter()
 
-  @Input() token: string
+  @Input() token: string = ''
 
   private userId: string
   private userName: string
+
+  private counter = 0
 
   private timer: NodeJS.Timer // https://github.com/Microsoft/TypeScript/issues/842
 
@@ -39,8 +41,14 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log('on init')
+
+    this.startTimer()
+  }
+
+  startTimer() {
     this.timer = setTimeout(_ => {
-      this.message.emit('hahaha')
+      this.message.emit('#' + this.token + ':' + this.counter++)
+      this.startTimer()
     }, 1000)
   }
 
