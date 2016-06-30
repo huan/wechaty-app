@@ -8,6 +8,6 @@ bootstrap(
   AppComponent
   , [
     HTTP_PROVIDERS
-    // , APP_ROUTES_PROVIDERS
+    , APP_ROUTES_PROVIDERS
   ]
 )

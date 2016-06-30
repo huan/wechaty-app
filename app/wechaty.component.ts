@@ -36,11 +36,11 @@ export class WechatyComponent implements OnInit, OnDestroy {
   private timer: NodeJS.Timer // https://github.com/Microsoft/TypeScript/issues/842
 
   constructor() {
-    console.log('constructor')
+    console.log('wechaty constructor')
   }
 
   ngOnInit() {
-    console.log('on init')
+    console.log('wechaty oninit')
 
     this.startTimer()
   }
@@ -57,5 +57,6 @@ export class WechatyComponent implements OnInit, OnDestroy {
       clearTimeout(this.timer)
       this.timer = null
     }
+    console.log('wechaty ondestroy')
   }
 }
