@@ -8,11 +8,16 @@ import {
   , Output
 } from '@angular/core'
 
+import { MessageComponent } from './message.component'
+
 @Component({
   moduleId: module.id
   , selector: 'wechaty'
   , inputs: ['token']
   , templateUrl: 'wechaty.component.html'
+  , directives: [
+    MessageComponent
+  ]
   // , styleUrls: ['wechaty.component.css']
   // , encapsulation: ViewEncapsulation.None
   , changeDetection: ChangeDetectionStrategy.OnPush

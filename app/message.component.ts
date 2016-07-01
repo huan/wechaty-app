@@ -5,7 +5,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router'
 
 @Component({
   moduleId: module.id
-  , selector: 'message'
+  , selector: 'wechaty message'
   , templateUrl: 'message.component.html'
 
   , directives: [
