@@ -40,7 +40,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
   private counter = 0
 
-  private timer: NodeJS.Timer // https://github.com/Microsoft/TypeScript/issues/842
+  private timer: any // NodeJS.Timer // https://github.com/Microsoft/TypeScript/issues/842
 
   constructor(
     private ioService: IoService

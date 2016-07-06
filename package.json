@@ -5,7 +5,7 @@
   "angular-cli": {},
   "main": "index.js",
   "scripts": {
-    "start": "ng serve",
+    "start": "ng serve --live-reload-port=8081",
     "postinstall": "typings install",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
@@ -20,7 +20,9 @@
     "wechaty",
     "angular",
     "angular2",
-    "component"
+    "component",
+    "web",
+    "web component"
   ],
   "author": "Zhuohuan LI <zixia@zixia.net>",
   "license": "MIT",
