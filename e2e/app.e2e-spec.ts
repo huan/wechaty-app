@@ -7,8 +7,13 @@ describe('ng-test App', function() {
     page = new NgTestPage();
   });
 
-  it('should display message saying app works', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+  it('should display message saying !$#$ app works', () => {
+    page.navigateTo()
+    const t = page.getParagraphText()
+    t.then(t => console.log(t))
+    // const t = browser.getTitle()
+    // t.then(title => console.log(title))
+    expect(t).toEqual('lala')
+    // expect(1).toEqual(1)
   });
 });

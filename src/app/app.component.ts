@@ -12,8 +12,8 @@ import { WechatyComponent } from './wechaty.component'
     WechatyComponent
     , ROUTER_DIRECTIVES
   ]
-  , styleUrls: ['app/app.component.scss']
-  // , providers: [HeroService]
+  // , styleUrls: ['app/app.component.css']
+  // , providers: [ROUTER_]
 })
 
 export class AppComponent implements OnInit, OnDestroy {
