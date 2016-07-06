@@ -1,7 +1,23 @@
-// Be descriptive with titles here. The describe and it titles combined read like a sentence.
+import { IoService } from '../app/io.service'
+
 describe('Users factory', function() {
-  it('has a dummy spec to test 2 + 2', function() {
-    // An intentionally failing test. No code within expect() will never equal 4.
-    expect(4).toEqual(4);
-  });
-});
+  const ioService = new IoService()
+  // var Users;
+
+  // // Before each test load our api.users module
+  // beforeEach(angular.mock.module('api.users'));
+
+  // // Before each test set our injected Users factory (_Users_) to our local Users variable
+  // beforeEach(inject(function(_Users_) {
+  //   Users = _Users_;
+  // }));
+
+  // // A simple test to verify the Users factory exists
+  // it('should exist', function() {
+  //   expect(Users).toBeDefined();
+  // });
+  it('test', () => {
+    const a = 1
+    expect(a).toEqual(1)
+  })
+})

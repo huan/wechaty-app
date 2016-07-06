@@ -9,6 +9,7 @@ import {
 } from '@angular/core'
 
 import { MessageComponent } from './message.component'
+import { IoService } from './io.service'
 
 @Component({
   moduleId: module.id
@@ -18,6 +19,7 @@ import { MessageComponent } from './message.component'
   , directives: [
     MessageComponent
   ]
+  , providers: [IoService]
   // , styleUrls: ['wechaty.component.css']
   // , encapsulation: ViewEncapsulation.None
   , changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,19 +42,25 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
   private timer: NodeJS.Timer // https://github.com/Microsoft/TypeScript/issues/842
 
-  constructor() {
+  constructor(
+    private ioService: IoService
+  ) {
     console.log('wechaty constructor')
   }
 
   ngOnInit() {
     console.log('wechaty oninit')
 
+    this.ioService.setToken(this.token)
+
     this.startTimer()
   }
 
   startTimer() {
     this.timer = setTimeout(_ => {
-      this.message.emit('#' + this.token + ':' + this.counter++)
+      this.counter++
+      const dong = this.ioService.ding(this.counter)
+      this.message.emit('#' + this.token + ':' + dong)
       this.startTimer()
     }, 1000)
   }

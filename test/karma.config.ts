@@ -15,8 +15,8 @@ export function config(config) {
 
     , plugins: [
        require('karma-jasmine')
-      // require('karma-chrome-launcher'),
-      // require('karma-firefox-launcher'),
+      , require('karma-chrome-launcher')
+      , require('karma-firefox-launcher')
       , require('karma-phantomjs-launcher')
     ]
 
@@ -65,8 +65,8 @@ export function config(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     , browsers: [
-      'PhantomJS'
-      // , 'Chrome'
+      // 'PhantomJS'
+      'Chrome'
     ]
 
 
@@ -77,5 +77,16 @@ export function config(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     , concurrency: Infinity
+
+// , proxies: {
+  //   '/static': 'http://gstatic.com',
+  //   '/web': 'http://localhost:9000',
+  //   '/img/': '/base/test/images/',
+  //   '/proxyfied': {
+  //     'target': 'http://myserver.localhost',
+  //     'changeOrigin': true
+  //   }
+  // }
+
   })
 }
