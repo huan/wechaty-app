@@ -12,7 +12,7 @@ import { WechatyComponent } from './wechaty.component'
     WechatyComponent
     , ROUTER_DIRECTIVES
   ]
-  // , styleUrls: ['app/app.component.css']
+  , styleUrls: ['app/app.component.scss']
   // , providers: [HeroService]
 })
 

@@ -14,12 +14,12 @@ import { IoService } from './io.service'
 @Component({
   moduleId: module.id
   , selector: 'wechaty'
-  , inputs: ['token']
+  // , inputs: ['token']
   , templateUrl: 'wechaty.component.html'
   , directives: [
     MessageComponent
   ]
-  , providers: [IoService]
+  // , providers: [IoService]
   // , styleUrls: ['wechaty.component.css']
   // , encapsulation: ViewEncapsulation.None
   , changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,7 +43,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   private timer: any // NodeJS.Timer // https://github.com/Microsoft/TypeScript/issues/842
 
   constructor(
-    private ioService: IoService
+    // private ioService: IoService
   ) {
     console.log('wechaty constructor')
   }
@@ -51,7 +51,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log('wechaty oninit')
 
-    this.ioService.setToken(this.token)
+    // this.ioService.setToken(this.token)
 
     this.startTimer()
   }
@@ -59,7 +59,8 @@ export class WechatyComponent implements OnInit, OnDestroy {
   startTimer() {
     this.timer = setTimeout(_ => {
       this.counter++
-      const dong = this.ioService.ding(this.counter)
+      // const dong = this.ioService.ding(this.counter)
+      const dong = 'faint, no io service'
       this.message.emit('#' + this.token + ':' + dong)
       this.startTimer()
     }, 1000)
