@@ -7,13 +7,12 @@ import { WechatyComponent } from './wechaty.component'
   moduleId: module.id
   , selector: 'app-root'
   , templateUrl: 'app.component.html'
-
   , directives: [
     WechatyComponent
     , ROUTER_DIRECTIVES
   ]
   // , styleUrls: ['app/app.component.css']
-  // , providers: [ROUTER_]
+  // , providers: []
 })
 
 export class AppComponent implements OnInit, OnDestroy {

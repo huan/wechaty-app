@@ -8,7 +8,7 @@ Wechaty Angular Web Component
 1. [Angular University](https://blog.angular-university.io)
 1. [THOUGHTRAM - EXPLORING ANGULAR 2 SERIES](http://blog.thoughtram.io/exploring-angular-2/)
 1. [PGRADING APPS TO ANGULAR 2 USING NGUPGRADE](http://blog.thoughtram.io/angular/2015/10/24/upgrading-apps-to-angular-2-using-ngupgrade.html)
-
+1. [How to create an Angular 2 component library](https://blog.angular-university.io/how-to-create-an-angular-2-library-and-how-to-consume-it-jspm-vs-webpack/)
 ## Desktop App
 
 1. [Angular2 and Electron - The definitive guide](https://www.xplatform.rocks/2016/02/14/angular2-and-electron-the-definitive-guide/)

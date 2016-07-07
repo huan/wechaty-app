@@ -1,17 +1,16 @@
 <h1>{{ title }}</h1>
 <nav>
-lala
+  <a [routerLink]="['/wechaty']" routerLinkActive="active">Dashboard</a>
+  <a [routerLink]="['/message']" routerLinkActive="active">My Bots</a>
 </nav>
 <!-- wechaty token=zixia (message)='log($event)'></wechaty -->
+
+
+<router-outlet></router-outlet>
+
 
 <wechaty>
   <message>
     message lalala
   </message>
 </wechaty>
-
-<a [routerLink]="['/wechaty']" routerLinkActive="active">Dashboard</a>
-<a [routerLink]="['/message']" routerLinkActive="active">My Bots</a>
-
-<router-outlet></router-outlet>
-

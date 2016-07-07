@@ -1,11 +1,11 @@
-import { NgTestPage } from './app.po';
+import { NgTestPage } from './app.po'
 
-describe('ng-test App', function() {
-  let page: NgTestPage;
+describe('Wechaty App', function() {
+  let page: NgTestPage
 
   beforeEach(() => {
-    page = new NgTestPage();
-  });
+    page = new NgTestPage()
+  })
 
   it('should display message saying !$#$ app works', () => {
     page.navigateTo()
@@ -13,7 +13,7 @@ describe('ng-test App', function() {
     t.then(t => console.log(t))
     // const t = browser.getTitle()
     // t.then(title => console.log(title))
-    expect(t).toEqual('lala')
-    // expect(1).toEqual(1)
+    expect(t).toEqual('Wechaty Web Component for Angular 2')
+    expect(1).toEqual(1)
   });
 });
