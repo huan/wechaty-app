@@ -1,7 +1,7 @@
 # Wechaty APP [![Build Status](https://travis-ci.org/zixia/wechaty-app.svg?branch=master)](https://travis-ci.org/zixia/wechaty-app)
 Wechaty APP Web Component
 
-[![TypeScript definitions on DefinitelyTyped](//definitelytyped.org/badges/standard.svg)](http://definitelytyped.org)
+[![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard.svg)](http://definitelytyped.org)
 
 # Refference
 
