@@ -4,28 +4,6 @@ sudo: false
 node_js:
   - '6'
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - libstdc++6
-
 branches:
   only:
   - master
-
-install:
-  - npm install
-  - npm run typings
-
-before_script:
-  - mkdir -p $LOGS_DIR
-
-script:
-- ./scripts/ci/build-and-test.sh
-
-cache:
-  directories:
-    - node_modules
-    - $HOME/.pub-cache
