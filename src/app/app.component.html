@@ -1,4 +1,4 @@
-<h1>{{ title }}</h1>
+<h1 class="zixia">{{ title }}</h1>
 <nav>
   <a [routerLink]="['/wechaty']" routerLinkActive="active">Dashboard</a>
   <a [routerLink]="['/message']" routerLinkActive="active">My Bots</a>
@@ -8,6 +8,7 @@
 
 <router-outlet></router-outlet>
 
+<hr>
 
 <wechaty>
   <message>

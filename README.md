@@ -1,6 +1,8 @@
 # wechaty-angular
 Wechaty Angular Web Component
 
+[![TypeScript definitions on DefinitelyTyped](//definitelytyped.org/badges/standard.svg)](http://definitelytyped.org)
+
 # Refference
 
 ## Angular
