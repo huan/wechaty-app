@@ -1,5 +1,5 @@
-# wechaty-angular
-Wechaty Angular Web Component
+# Wechaty APP [![Build Status](https://travis-ci.org/zixia/wechaty-app.svg?branch=master)](https://travis-ci.org/zixia/wechaty-app)
+Wechaty APP Web Component
 
 [![TypeScript definitions on DefinitelyTyped](//definitelytyped.org/badges/standard.svg)](http://definitelytyped.org)
 
@@ -93,8 +93,3 @@ Notice: if you use cloud9, you need to change the default shell from `dash` to `
 ```shell
 $ sudo ln -sf /bin/bash /bin/sh
 ```
-
-
-https://github.com/jhades/angular2-library-example
-http://blog.angular-university.io/how-to-create-an-angular-2-library-and-how-to-consume-it-jspm-vs-webpack/
-https://github.com/preboot/angular2-webpack

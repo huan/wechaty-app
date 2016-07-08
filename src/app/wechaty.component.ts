@@ -63,7 +63,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
       const dong = 'faint, no io service'
       this.message.emit('#' + this.token + ':' + dong)
       this.startTimer()
-    }, 1000).unref()
+    }, 1000)
   }
 
   ngOnDestroy() {
