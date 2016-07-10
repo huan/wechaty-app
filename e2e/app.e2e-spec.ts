@@ -8,7 +8,7 @@ describe('Wechaty App', function() {
   })
 
   it('should display message saying !$#$ app works', () => {
-    page.navigateTo()
+    // page.navigateTo()
     // const t = page.getParagraphText()
     // t.then(t => console.log(t))
     // const t = browser.getTitle()
