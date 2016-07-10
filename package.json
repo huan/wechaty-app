@@ -1,21 +1,24 @@
 {
-  "name": "wechaty-angular",
+  "name": "wechaty-app",
   "version": "0.0.1",
-  "description": "Wechaty Web Component for Angular 2",
+  "description": "Wechaty APP",
   "angular-cli": {},
   "main": "index.js",
   "scripts": {
-    "start": "ng serve --live-reload-port=8081",
+    "start": "ng serve --live-reload-port=8081 & echo $! > /tmp/ng.pid",
+    "stop": "kill $(cat /tmp/ng.pid)",
     "postinstall": "typings install",
-    "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test --watch=false",
-    "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
-    , "prepublish": "echo prepublish"
+    "lint": "tslint src/**/*.ts",
+    "test": "npm start && ng test --watch=false && ng e2e && npm stop",
+    "pree2e": "webdriver-manager update && npm start",
+    "e2e": "ng e2e"
+    , "poste2e": "npm stop"
+    , "build": "rm -rf dist && tsc --project src"
+    , "prepublish": "npm run build && npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zixia/wechaty-angular.git"
+    "url": "git+https://github.com/zixia/wechaty-app.git"
   },
   "keywords": [
     "wechaty",
@@ -28,9 +31,9 @@
   "author": "Zhuohuan LI <zixia@zixia.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zixia/wechaty-angular/issues"
+    "url": "https://github.com/zixia/wechaty-app/issues"
   },
-  "homepage": "https://github.com/zixia/wechaty-angular#readme",
+  "homepage": "https://github.com/zixia/wechaty-app#readme",
   "engines": {
     "node": ">= 6.0.0"
   },

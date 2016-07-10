@@ -23,13 +23,13 @@ Wechaty APP Web Component
 
 ## Testing
 
-What's the relationship between [ProTractor](http://www.protractortest.org), Karma and Jasmine?
+What's the relationship between [Protractor](http://www.protractortest.org), Karma and Jasmine?
 
 Simple.
 
-1. Jasmine compare variable A and variable B, output wether it is as expected
-1. Karma start one or many browsers, and run Jasmine inside browser, for Unit Testing
-1. ProTractor start one or many browsers, and run Jasmine outside browser, for End to End Testing
+1. Jasmine tell us whether the function is as expected by compare the function return value with the expected value.
+1. Karma start browser, and run Jasmine inside browser, for Unit Testing
+1. ProTractor start browser, and run Jasmine outside browser, for End to End Testing
 
 ### Unit Testing
 
