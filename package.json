@@ -14,7 +14,7 @@
     "e2e": "ng e2e"
     , "poste2e": "npm stop"
     , "build": "rm -rf dist && tsc --project src"
-    , "prepublish": "npm run build && npm test"
+    , "Xprepublish": "npm run build && npm test"
   },
   "repository": {
     "type": "git",
