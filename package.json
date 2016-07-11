@@ -8,13 +8,13 @@
     "start": "ng serve --live-reload-port=8081 &",
     "stop": "ps ax | grep angular-cli | grep -v grep && killall angular-cli || echo 'no angular-cli need kill'",
     "postinstall": "typings install",
-    "lint": "tslint src/**/*.ts"
-    , "test": "ng test --watch=false && npm run e2e"
-    , "pree2e": "npm start"
-    , "e2e": "protractor config/protractor.conf.js"
-    , "poste2e": "npm stop"
-    , "build": "rm -rf dist && tsc --project src"
-    , "Xprepublish": "npm run build && npm test"
+    "lint": "tslint src/**/*.ts",
+    "test": "ng test --watch=false && npm run e2e",
+    "pree2e": "npm start",
+    "e2e": "protractor config/protractor.conf.js",
+    "poste2e": "npm stop",
+    "build": "rm -rf dist && tsc --project src",
+    "Xprepublish": "npm run build && npm test"
   },
   "repository": {
     "type": "git",
@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "angular-cli": "1.0.0-beta.8",
+    "chromedriver": "^2.21.2",
     "codelyzer": "0.0.20",
     "ember-cli-inject-live-reload": "1.4.0",
     "jasmine-core": "2.4.1",
@@ -68,6 +69,6 @@
     "tslint": "3.11.0",
     "typescript": "1.8.10",
     "typings": "0.8.1"
-  }
-  , "typings": "./component.d.ts"
+  },
+  "typings": "./component.d.ts"
 }
