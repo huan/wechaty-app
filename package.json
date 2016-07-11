@@ -10,7 +10,7 @@
     "postinstall": "typings install",
     "lint": "tslint src/**/*.ts",
     "test": "ng test --watch=false && npm run e2e",
-    "pree2e": "npm start",
+    "pree2e": "npm start && webdriver-manager update",
     "e2e": "protractor config/protractor.conf.js",
     "poste2e": "npm stop",
     "build": "rm -rf dist && tsc --project src",
@@ -55,7 +55,6 @@
   },
   "devDependencies": {
     "angular-cli": "1.0.0-beta.8",
-    "chromedriver": "^2.21.2",
     "codelyzer": "0.0.20",
     "ember-cli-inject-live-reload": "1.4.0",
     "jasmine-core": "2.4.1",
