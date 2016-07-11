@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ROUTER_DIRECTIVES } from '@angular/router'
+import { RouterConfig } from '@angular/router'
 
 // import { WechatyComponent } from './wechaty.component'
 
 @Component({
   moduleId: module.id
   , selector: 'message'
-  , templateUrl: 'message.component.html'
+  , templateUrl: 'message.html'
 
   , directives: [
     // WechatyComponent
-    // ， ROUTER_DIRECTIVES
   ]
   // , styleUrls: ['app/app.component.css']
   // , providers: [HeroService]
@@ -35,3 +34,10 @@ export class MessageComponent implements OnInit, OnDestroy {
     console.log(e)
   }
 }
+
+export const MessageRoutes: RouterConfig = [
+  {
+    path: 'message',
+    component: MessageComponent
+  }
+]

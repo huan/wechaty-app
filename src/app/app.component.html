@@ -1,7 +1,15 @@
 <h1 class="zixia">{{ title }}</h1>
 <nav>
-  <a [routerLink]="['/wechaty']" routerLinkActive="active">Dashboard</a>
-  <a [routerLink]="['/message']" routerLinkActive="active">My Bots</a>
+  <span>
+    <a [routerLink]="['/wechaty']" routerLinkActive="active">Dashboard</a>
+    <a [routerLink]="['/message']" routerLinkActive="active">My Bots</a>
+    <a [routerLink]="['/about']" routerLinkActive="active">About</a>
+  </span>
+  <span align="end">
+    <a [routerLink]="['/login']" routerLinkActive="active">Login</a>
+    <a (click)="logout()">Logout</a>
+  </span>
+
 </nav>
 <!-- wechaty token=zixia (message)='log($event)'></wechaty -->
 

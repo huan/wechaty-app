@@ -70,4 +70,8 @@
     "typings": "0.8.1"
   },
   "typings": "./component.d.ts"
+  , "typescript": {
+    "main": "src/app/index.ts"
+    , "definition": "src/app/index.d.ts"
+  }
 }

@@ -1,0 +1,34 @@
+<div>
+
+  <h1>{{ title }}</h1>
+  <span> loginout token: {{ 1+1 }} </span>
+
+  <form #form="ngForm" (ngSubmit)="login(form.value)">
+    <label for="username">Username or Email:</label>
+    <input type="text"
+      name="username"
+      ngModel
+      required
+    />
+
+    <label for="password">Password:</label>
+    <input type="password"
+      name="password"
+      ngModel
+      required
+    />
+
+    <span for="remember">Remember Me: </span>
+    <input type="checkbox"
+      name="remember"
+      ngModel
+    >
+
+    <button type="submit"
+    >Sign In</button>
+
+    &nbsp;<a href="/login/forgot">Forgot your password?</a>
+
+  </form>
+
+</div>

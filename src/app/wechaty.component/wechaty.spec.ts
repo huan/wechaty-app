@@ -5,7 +5,7 @@ import {
   async, inject
 } from '@angular/core/testing'
 
-import { WechatyComponent } from './wechaty.component'
+import { WechatyComponent } from './wechaty'
 
 beforeEachProviders(() => [WechatyComponent])
 

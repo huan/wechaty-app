@@ -1,12 +1,20 @@
 import { provideRouter, RouterConfig } from '@angular/router'
 import { WechatyComponent } from './wechaty.component'
-import { MessageComponent } from './message.component'
+
+import { AboutRoutes }     from './+about.component/index'
+import { LoginoutRoutes }  from './loginout.component/index'
+import { WechatyRoutes }   from './wechaty.component/index'
+import { MessageRoutes }   from './message.component/index'
+import { BotListRoutes }   from './bot-list.component/index'
+import { BotRoutes }       from './bot.component/index'
 
 const routes: RouterConfig = [
-  { path: 'wechaty',    component: WechatyComponent }
-  , { path: 'message',  component: MessageComponent }
+  ...AboutRoutes
+  , ... LoginoutRoutes
+  , ... WechatyRoutes
+  , ... MessageRoutes
 
-  , { path: '',         redirectTo: '/wechaty' }
+  , { path: '', redirectTo: '/about' }
 ]
 
 export const APP_ROUTER_PROVIDERS = [

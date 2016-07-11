@@ -7,20 +7,21 @@ import {
   , Input
   , Output
 } from '@angular/core'
+import { RouterConfig } from '@angular/router'
 import { Observable, Subject } from 'rxjs/Rx'
 
-import { MessageComponent } from './message.component'
-import { IoService } from './io.service'
+import { MessageComponent } from '../message.component/index'
+import { IoService } from '../io.service/index'
 
 @Component({
   moduleId: module.id
   , selector: 'wechaty'
   // , inputs: ['token']
-  , templateUrl: 'wechaty.component.html'
+  , templateUrl: 'wechaty.html'
   , directives: [
     MessageComponent
   ]
-  // , providers: [IoService]
+  , providers: [IoService]
   // , styleUrls: ['wechaty.component.css']
   // , encapsulation: ViewEncapsulation.None
   , changeDetection: ChangeDetectionStrategy.OnPush
@@ -46,7 +47,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   private ender: any//Subject<any>
 
   constructor(
-    // private ioService: IoService
+    private ioService: IoService
   ) {
     console.log('wechaty constructor')
   }
@@ -54,7 +55,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log('wechaty oninit')
 
-    // this.ioService.setToken(this.token)
+    this.ioService.setToken(this.token)
     this.ender = new Subject()
 
     // this.startTimer()
@@ -100,3 +101,10 @@ export class WechatyComponent implements OnInit, OnDestroy {
     console.log('wechaty ondestroy')
   }
 }
+
+export const WechatyRoutes: RouterConfig = [
+  {
+    path: 'wechaty',
+    component: WechatyComponent
+  }
+]

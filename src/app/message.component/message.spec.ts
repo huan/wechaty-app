@@ -6,7 +6,7 @@ import {
   expect, it, xit,
   async, inject
 } from '@angular/core/testing';
-import { MessageComponent } from './message.component';
+import { MessageComponent } from './message';
 
 beforeEachProviders(() => [MessageComponent]);
 
