@@ -5,13 +5,13 @@
   "angular-cli": {},
   "main": "index.js",
   "scripts": {
-    "start": "ng serve --live-reload-port=8081 & echo $! > /tmp/ng.pid",
-    "stop": "kill $(cat /tmp/ng.pid)",
+    "start": "ng serve --live-reload-port=8081 &",
+    "stop": "ps ax | grep angular-cli | grep -v grep && killall angular-cli || echo 'no angular-cli need kill'",
     "postinstall": "typings install",
-    "lint": "tslint src/**/*.ts",
-    "test": "npm start && ng test --watch=false && ng e2e && npm stop",
-    "pree2e": "webdriver-manager update && npm start",
-    "e2e": "ng e2e"
+    "lint": "tslint src/**/*.ts"
+    , "test": "ng test --watch=false && npm run e2e"
+    , "pree2e": "npm start"
+    , "e2e": "protractor config/protractor.conf.js"
     , "poste2e": "npm stop"
     , "build": "rm -rf dist && tsc --project src"
     , "Xprepublish": "npm run build && npm test"
@@ -26,6 +26,7 @@
     "angular2",
     "component",
     "web",
+    "zixia",
     "web component"
   ],
   "author": "Zhuohuan LI <zixia@zixia.net>",

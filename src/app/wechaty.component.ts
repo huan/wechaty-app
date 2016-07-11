@@ -57,7 +57,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
     // this.ioService.setToken(this.token)
     this.ender = new Subject()
 
-    this.startTimer()
+    // this.startTimer()
   }
 
   startTimer() {

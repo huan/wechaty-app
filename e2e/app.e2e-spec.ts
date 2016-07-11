@@ -8,18 +8,18 @@ describe('Wechaty App', function() {
   })
 
   it('should display message saying !$#$ app works', () => {
-    // page.navigateTo()
+    page.navigateTo()
     // const t = page.getParagraphText()
     // t.then(t => console.log(t))
-    // const t = browser.getTitle()
-    // t.then(title => console.log(title))
-    // expect(t).toEqual('Wechaty Web Component for Angular 2')
+    const t = browser.getTitle()
+    t.then(title => console.log(title))
+    expect(t).toEqual('Wechaty APP')
 
 
     // expect(element(by.css('.zixia')).getText()).toEqual('Hello Wechaty')
 
     expect(1).toEqual(1)
-    // expect(browser.getTitle()).toEqual('Wechaty APP')
+    expect(browser.getTitle()).toEqual('Wechaty APP')
 
   })
 })
