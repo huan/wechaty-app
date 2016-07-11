@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/zixia/wechaty-app#readme",
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 5.0.0"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.3",
