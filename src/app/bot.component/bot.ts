@@ -45,6 +45,10 @@ export class BotComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe()
   }
 
+  log(e) {
+    console.log('BotComponent.log()')
+    console.log(e)
+  }
 }
 
 

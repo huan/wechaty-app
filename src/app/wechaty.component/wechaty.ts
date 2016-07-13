@@ -91,28 +91,30 @@ export class WechatyComponent implements OnInit, OnDestroy {
   onIo(e) {
     console.log('Wechaty.onIo()')
     console.log(e)
+    this.message.emit(e.name + ':' + e.data)
   }
 
   startTimer() {
     // https://github.com/angular/protractor/issues/3349#issuecomment-232253059
     // https://github.com/juliemr/ngconf-2016-zones/blob/master/src/app/main.ts#L38
     this.ngZone.runOutsideAngular(() => {
-      this.timer = Observable.interval(1000)
+      this.timer = Observable.interval(3000)
           .takeUntil(this.ender)
     })
 
     this.timer.subscribe(t => {
       this.counter = t
-      // const dong = this.ioService.ding(this.counter)
-      const dong = 'faint, no io service #' + t
-      this.message.emit('#' + this.token + ':' + dong)
 
-      const ioEvent: IoEvent = {
-        name: 'test'
-        , data: dong
-      }
+      this.ioService.ding(this.counter)
+      // const dong = 'faint, no io service #' + t
+      // this.message.emit('#' + this.token + ':' + dong)
+
+      // const ioEvent: IoEvent = {
+      //   name: 'test'
+      //   , data: 'test from timer'
+      // }
       // this.ioService.io().next(ioEvent)
-      console.log(dong)
+      // console.log(dong)
     })
 
   }

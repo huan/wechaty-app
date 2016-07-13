@@ -2,7 +2,19 @@
   Bot Detail Id: {{ id }}
 </h1>
 
-<wechaty token="zixia">
+<script>
+  messages = []
+</script>
+<wechaty
+  token="zixia"
+  (message)="log($event)"
+>
   <h1>Wechaty Bot Id: {{ id }} token: {{ token }}</h1>
   <div>counter: {{ counter }}</div>
+
+  <ol>
+    <li *ngFor="let message of messages">
+      {{ message }}
+    </li>
+  </ol>
 </wechaty>
