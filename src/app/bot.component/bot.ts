@@ -1,13 +1,51 @@
-import { Component } from '@angular/core'
-import { RouterConfig } from '@angular/router'
+import {
+  Component
+  , OnInit
+  , OnDestroy
+ } from '@angular/core'
+import {
+  RouterConfig
+  , ActivatedRoute
+} from '@angular/router'
+
+import { WechatyComponent } from '../wechaty.component/index'
 
 @Component({
-  moduleId: module.id,
-  selector: 'wechaty bot',
-  templateUrl: 'bot.html',
-  styleUrls: ['bot.css']
+  moduleId: module.id
+  , selector: 'wechaty bot'
+  , templateUrl: 'bot.html'
+  , directives: [WechatyComponent]
+  , styleUrls: ['bot.css']
 })
-export class BotComponent {}
+export class BotComponent implements OnInit, OnDestroy {
+  id: number
+  token: string
+
+  sub: any
+
+  constructor(
+    private route: ActivatedRoute
+  ) {
+    console.log('bot constuctor')
+  }
+
+  ngOnInit() {
+    console.log('bot on init')
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['id']
+      // this.heroService.getHero(id)
+      //     .then(hero => this.hero = hero)
+    })
+
+    this.token = 'zixia'
+  }
+
+  ngOnDestroy() {
+    console.log('bot on destroy')
+    this.sub.unsubscribe()
+  }
+
+}
 
 
 export const BotRoutes: RouterConfig = [

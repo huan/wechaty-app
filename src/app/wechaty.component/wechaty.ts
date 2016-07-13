@@ -2,29 +2,26 @@ import {
   Component
   , OnInit
   , OnDestroy
-  , ChangeDetectionStrategy
   , EventEmitter
   , Input
   , Output
+  , NgZone
 } from '@angular/core'
-import { RouterConfig } from '@angular/router'
 import { Observable, Subject } from 'rxjs/Rx'
 
 import { MessageComponent } from '../message.component/index'
-import { IoService } from '../io.service/index'
+import { IoService, IoEvent } from '../io.service/index'
 
 @Component({
   moduleId: module.id
   , selector: 'wechaty'
-  // , inputs: ['token']
+  , inputs: ['token']
   , templateUrl: 'wechaty.html'
   , directives: [
     MessageComponent
   ]
-  , providers: [IoService]
-  // , styleUrls: ['wechaty.component.css']
-  // , encapsulation: ViewEncapsulation.None
-  , changeDetection: ChangeDetectionStrategy.OnPush
+  // , providers: [IoService]
+  , styleUrls: ['wechaty.css']
 })
 
 export class WechatyComponent implements OnInit, OnDestroy {
@@ -40,42 +37,32 @@ export class WechatyComponent implements OnInit, OnDestroy {
   private userId: string
   private userName: string
 
-  private counter = 0
-
   private timer: Observable<any>
-  private subscription: any
+  private ioSubscription: any
   private ender: any//Subject<any>
 
+  private ioService: IoService
+
+  counter = 0
+
   constructor(
-    private ioService: IoService
+    // private ioService: IoService
+    private ngZone: NgZone
   ) {
-    console.log('wechaty constructor')
+    console.log('Wechaty.constructor() with token: ' + this.token)
   }
 
   ngOnInit() {
-    console.log('wechaty oninit')
+    console.log('Wechaty.ngOninit()')
 
-    this.ioService.setToken(this.token)
+    const ioService = this.ioService = new IoService(this.token)
+
+    this.ioSubscription = ioService.io()
+                          .subscribe(e => this.onIo(e))
+
     this.ender = new Subject()
 
-    // this.startTimer()
-  }
-
-  startTimer() {
-    this.timer = Observable.interval(1000)
-        .takeUntil(this.ender)
-
-    this.subscription = this.timer.subscribe(t => {
-      this.counter = t
-      // const dong = this.ioService.ding(this.counter)
-      const dong = 'faint, no io service #' + t
-      this.message.emit('#' + this.token + ':' + dong)
-      console.log(dong)
-    })
-
-  }
-
-  endTimer() {
+    this.startTimer()
   }
 
   ngOnDestroy() {
@@ -86,9 +73,9 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ender.next('emit end')
     }
 
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-      this.subscription = null
+    if (this.ioSubscription) {
+      this.ioSubscription.unsubscribe()
+      this.ioSubscription = null
     }
 
     if (this.timer) {
@@ -100,11 +87,38 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
     console.log('wechaty ondestroy')
   }
-}
 
-export const WechatyRoutes: RouterConfig = [
-  {
-    path: 'wechaty',
-    component: WechatyComponent
+  onIo(e) {
+    console.log('Wechaty.onIo()')
+    console.log(e)
   }
-]
+
+  startTimer() {
+    // https://github.com/angular/protractor/issues/3349#issuecomment-232253059
+    // https://github.com/juliemr/ngconf-2016-zones/blob/master/src/app/main.ts#L38
+    this.ngZone.runOutsideAngular(() => {
+      this.timer = Observable.interval(1000)
+          .takeUntil(this.ender)
+    })
+
+    this.timer.subscribe(t => {
+      this.counter = t
+      // const dong = this.ioService.ding(this.counter)
+      const dong = 'faint, no io service #' + t
+      this.message.emit('#' + this.token + ':' + dong)
+
+      const ioEvent: IoEvent = {
+        name: 'test'
+        , data: dong
+      }
+      // this.ioService.io().next(ioEvent)
+      console.log(dong)
+    })
+
+  }
+
+  endTimer() {
+    this.ender.next()
+  }
+
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { ROUTER_DIRECTIVES } from '@angular/router'
+import { ROUTER_DIRECTIVES, Router } from '@angular/router'
 
 import { WechatyComponent }  from './wechaty.component/index'
 import { AuthService }       from './auth.service/index'
@@ -23,12 +23,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService
+    , private router: Router
    ) {
     console.log('app constructor')
   }
 
   ngOnInit() {
     console.log('app oninit')
+
+    let link = ['/login']
+    if (this.authService.authed()) {
+      link = ['/bot', "1"]
+    }
+    this.router.navigate(link)
   }
 
   ngOnDestroy() {

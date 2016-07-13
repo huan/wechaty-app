@@ -6,16 +6,13 @@ import {
 import { Router, ActivatedRoute, RouterConfig } from '@angular/router'
 import { Validators }   from '@angular/forms'
 
-import { AuthService }  from '../auth.service/index'
+import { AuthService } from '../auth.service/index'
 
 @Component({
   moduleId: module.id
   , selector: 'loginout'
   , templateUrl: 'loginout.html'
   , styleUrls: ['loginout.css']
-  , providers: [
-    AuthService
-  ]
 })
 
 export class LoginoutComponent implements OnInit, OnDestroy {
@@ -39,6 +36,10 @@ export class LoginoutComponent implements OnInit, OnDestroy {
     //   console.log(url[0].path)
     // })
     console.log('loginout oninit')
+
+    const link = ['/bot', '1']
+    this.router.navigate(link)
+
   }
 
   ngOnDestroy() {
@@ -52,7 +53,7 @@ export class LoginoutComponent implements OnInit, OnDestroy {
     username
     , password
     , remember
-  }: any) {
+  }) {
 
     let succ = this.authService.auth(username, password)
 
@@ -63,6 +64,13 @@ export class LoginoutComponent implements OnInit, OnDestroy {
       + ') : '
       + succ
      )
+
+    if (succ) {
+      console.log('succ, redirect to bot/1')
+      const link = ['/bot', '1']
+      this.router.navigate(link)
+    }
+
     return succ
   }
 

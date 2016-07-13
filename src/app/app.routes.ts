@@ -3,18 +3,18 @@ import { WechatyComponent } from './wechaty.component'
 
 import { AboutRoutes }     from './+about.component/index'
 import { LoginoutRoutes }  from './loginout.component/index'
-import { WechatyRoutes }   from './wechaty.component/index'
 import { MessageRoutes }   from './message.component/index'
 import { BotListRoutes }   from './bot-list.component/index'
 import { BotRoutes }       from './bot.component/index'
 
 const routes: RouterConfig = [
-  ...AboutRoutes
+  ... AboutRoutes
   , ... LoginoutRoutes
-  , ... WechatyRoutes
   , ... MessageRoutes
+  , ... BotListRoutes
+  , ... BotRoutes
 
-  , { path: '', redirectTo: '/about' }
+  , { path: '', redirectTo: '/login' }
 ]
 
 export const APP_ROUTER_PROVIDERS = [
