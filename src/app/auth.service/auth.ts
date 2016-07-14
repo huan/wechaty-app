@@ -1,12 +1,10 @@
 import {
   Injectable
-  , OnInit
-  , OnDestroy
 } from '@angular/core'
 import { User } from '../shared/user'
 
 @Injectable()
-export class AuthService implements OnInit, OnDestroy {
+export class AuthService {
   private authStatus = false
 
   private token: string
@@ -14,14 +12,6 @@ export class AuthService implements OnInit, OnDestroy {
 
   constructor() {
     console.log('AuthService.constructor()')
-  }
-
-  ngOnInit() {
-    console.log('AuthService.ngOnInit()')
-  }
-
-  ngOnDestroy() {
-    console.log('AuthService.ngOnDestroy()')
   }
 
   authed() { return this.authStatus }
