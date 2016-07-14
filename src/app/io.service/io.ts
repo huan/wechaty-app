@@ -1,9 +1,6 @@
 import {
   Injectable
-  // no need use OnInit & OnDestroy, because we create this service manually.
-  // there will be no angular framework to call those two ngOnXXX functions.
-  // , OnInit
-  // , OnDestroy
+  // OnInit & OnDestroy not work for @Injectable. http://stackoverflow.com/a/36189206/1123955
 } from '@angular/core'
 import {
   Observable
@@ -19,23 +16,18 @@ export class IoEvent {
 @Injectable()
 export class IoService {
   private ENDPOINT = 'ws://jp.aka.cn:8080/websocket/token/'
-  // 'wss://api.wechaty.io/websocket/token/'
+  // private ENDPOINT = 'wss://api.wechaty.io/websocket/token/'
   private wsProtocol = 'web|0.0.1'
-  private wsUrl: string
-
   private token: string
 
   private websocket: WebSocket
-  // private wsIniting = false
   private subscriber: Subscriber<IoEvent>
   private ioSubject: Subject<IoEvent>
-
   private sendBuffer: string[]
 
   constructor(token) {
     console.log('IoService.constructor()')
     this.token = token
-    this.wsUrl = this.endPoint(this.token)
     this.sendBuffer = []
 
     this.init()
@@ -54,7 +46,6 @@ export class IoService {
 
   destroy() {
     console.log('IoServer.destroy()')
-
     this.ioSubject.unsubscribe()
   }
 
@@ -62,7 +53,7 @@ export class IoService {
     return this.ioSubject
   }
 
-  endPoint(token): string {
+  endPoint(): string {
     return this.ENDPOINT + this.token
   }
 
@@ -77,7 +68,7 @@ export class IoService {
       name: 'ding'
       , data
     }
-    this.ioSubject.next(e)
+    this.io().next(e)
   }
 
   wsClose() {
@@ -102,30 +93,27 @@ export class IoService {
       }
       // 2. send this one
       this.websocket.send(message)
-    } else {
-      console.log('wsSend() be called without WebSocket.OPEN')
+
+    } else { // 3. buffer this message for future retry
       this.sendBuffer.push(message)
-      console.log('buffered. length now : ' + this.sendBuffer.length)
-      // console.log('call initWebsocket ...')
-      // this.initWebsocket()
+      console.log('wsSend() without WebSocket.OPEN, buf len: %d', this.sendBuffer.length)
     }
   }
 
   initIoSubject() {
     console.log('IoServer.initIoSubject()')
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       const observable = Observable.create(subscriber => {
         console.log('Observable.create()')
-        // console.log(subscriber)
         this.subscriber = subscriber
 
-        ////////////////////
+        ////////////////////////
         resolve()
-        ////////////////////
+        ////////////////////////
 
         return this.wsClose.bind(this)
-      })
+      }).share()
 
       const obs = {
         complete: this.wsClose.bind(this)
@@ -140,17 +128,11 @@ export class IoService {
     console.log('IoServer.initWebsocket()')
 
     if (this.websocket) {
-      console.log('there do has a websocket. return for do nothing')
+      console.log('there already has a websocket. return for do nothing')
       return
     }
 
-    // if (this.wsIniting) {
-    //   console.log('wsIniting is true. return for do nothing')
-    //   return
-    // }
-    // this.wsIniting = true
-
-    this.websocket = new WebSocket(this.wsUrl, this.wsProtocol)
+    this.websocket = new WebSocket(this.endPoint(), this.wsProtocol)
 
     this.websocket.onerror = onError.bind(this)
     this.websocket.onopen  = onOpen.bind(this)
@@ -162,54 +144,40 @@ export class IoService {
 
 }
 
-function onOpen(e)
-{
+function onOpen(e) {
   console.log('IoService.onOpen()')
-
-  this.wsIniting = false
-  // this.send()
 }
 
-function onClose(e)
-{
+function onClose(e) {
   console.log('IoService.onClose(' + e + ')')
   console.log(e)
 
   this.websocket = null
-  // this.wsIniting = false
   setTimeout(_ => {
     this.initWebsocket()
   }, 1000)
 
-  // TODO: reconnect
-  // this.complete(e)
-
   if (!e.wasClean) {
     // console.warn('IoService.onClose: e.wasClean FALSE')
-    // XXX don't call error() unless we can't recover
-    // this.error(e)
   }
 }
 
-function onError(e)
-{
+function onError(e) {
   console.log('IoService.onError(' + e + ')')
   console.warn(e)
 
-  // this.websocket = null
-  // this.wsIniting = false
-  // this.initWebsocket()
-
+  this.websocket = null
   // log.verbose('IoService', 'xixi %s', 'haha')
   // log.level = ''
   // npmlog
   // conlog
-
-  // TODO: recover from error automaticaly
-  // and only raise error when we cant recover.
-  // this.error(e)
 }
 
+/**
+ *
+ * this: Subscriber
+ *
+ */
 function onMessage(e)
 {
   console.log('IoService.onMessage()')
@@ -217,7 +185,7 @@ function onMessage(e)
   let ioEvent: IoEvent = {
     name: 'text'
     , data: e.data
-  }
+  } // this is default io event for unknown format message
 
   try {
     ioEvent = JSON.parse(e.data)
