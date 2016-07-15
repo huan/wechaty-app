@@ -10,7 +10,7 @@ import {
 
 export class IoEvent {
   name: string
-  data: any
+  payload: any
 }
 
 @Injectable()
@@ -61,12 +61,12 @@ export class IoService {
     return this.websocket && (this.websocket.readyState === WebSocket.OPEN)
   }
 
-  ding(data) {
-    console.log('IoService.ding(' + data + ')')
+  ding(payload) {
+    console.log('IoService.ding(' + payload + ')')
 
     const e: IoEvent = {
       name: 'ding'
-      , data
+      , payload
     }
     this.io().next(e)
   }
@@ -138,7 +138,7 @@ export class IoService {
     this.websocket.onopen  = onOpen.bind(this)
     this.websocket.onclose = onClose.bind(this)
 
-    // Handle the data
+    // Handle the payload
     this.websocket.onmessage = onMessage.bind(this.subscriber)
   }
 
@@ -178,17 +178,17 @@ function onError(e) {
  * this: Subscriber
  *
  */
-function onMessage(e)
+function onMessage(message)
 {
   console.log('IoService.onMessage()')
 
   let ioEvent: IoEvent = {
-    name: 'text'
-    , data: e.data
+    name: 'raw'
+    , payload: message
   } // this is default io event for unknown format message
 
   try {
-    ioEvent = JSON.parse(e.data)
+    ioEvent = JSON.parse(message)
   } catch (e) {
     console.log('IoService.onMessage parse message fail.')
   }

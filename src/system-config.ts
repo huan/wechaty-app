@@ -7,6 +7,7 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  'brolog': 'vendor/brolog/index.js'
 };
 
 /** User packages configuration. */

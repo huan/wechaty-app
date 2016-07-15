@@ -7,15 +7,15 @@
   <base href="/">
 
   <script>
-  // See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
-  // http://developer.telerik.com/featured/quick-angular-2-hosting-angular-cli-github-pages/
-  (function(){
-    var redirect = sessionStorage.redirect;
-    delete sessionStorage.redirect;
-    if (redirect && redirect != window.location.href) {
-      window.history.replaceState(null, null, redirect);
-    }
-  })();
+    // See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
+    // http://developer.telerik.com/featured/quick-angular-2-hosting-angular-cli-github-pages/
+    (function(){
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != window.location.href) {
+        window.history.replaceState(null, null, redirect);
+      }
+    })();
   </script>
 
   {{#unless environment.production}}

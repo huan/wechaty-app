@@ -7,7 +7,11 @@ import {
   , Output
   , NgZone
 } from '@angular/core'
-import { Observable, Subject } from 'rxjs/Rx'
+import {
+  Observable
+  , Subject
+  , Subscription
+} from 'rxjs/Rx'
 
 import { MessageComponent } from '../message.component/index'
 import { IoService, IoEvent } from '../io.service/index'
@@ -34,10 +38,8 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
   @Input() token: string = ''
 
-  private userId: string
-  private userName: string
-
   private timer: Observable<any>
+  private timerSub: Subscription
   private ioSubscription: any
   private ender: any//Subject<any>
 
@@ -46,7 +48,6 @@ export class WechatyComponent implements OnInit, OnDestroy {
   counter = 0
 
   constructor(
-    // private ioService: IoService
     private ngZone: NgZone
   ) {
     console.log('Wechaty.constructor() with token: ' + this.token)
@@ -58,9 +59,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
     const ioService = this.ioService = new IoService(this.token)
 
     this.ioSubscription = ioService.io()
-                          .subscribe(e => this.onIo(e))
-
-    this.ender = new Subject()
+                          .subscribe(this.onIo.bind(this))
 
     this.startTimer()
   }
@@ -68,59 +67,77 @@ export class WechatyComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.endTimer()
 
-    if (this.ender) {
-      console.log(this.ender)
-      this.ender.next('emit end')
-    }
-
     if (this.ioSubscription) {
       this.ioSubscription.unsubscribe()
       this.ioSubscription = null
     }
 
-    if (this.timer) {
-      // console.log(this.timer)
-      // XXX how to cancel?
-      // this.timer.dispose()
-      this.timer = null
-    }
-
     console.log('wechaty ondestroy')
   }
 
-  onIo(e) {
-    console.log('Wechaty.onIo()')
-    console.log(e)
-    this.message.emit(e.name + ':' + e.data)
+  onIo(e: IoEvent) {
+    console.log('Wechaty.onIo(%s)', e.name)
+    // console.log(e.payload)
+
+    switch(e.name) {
+      case 'heartbeat':
+        this.heartbeat.emit(e.payload)
+        break
+      case 'scan':
+        this.scan.emit(e.payload)
+        break
+      case 'message':
+        this.message.emit(e.payload)
+        break
+      case 'login':
+        this.login.emit(e.payload)
+        break
+      case 'logout':
+        this.logout.emit(e.payload)
+        break
+      case 'error':
+        this.error.emit(e.payload)
+        break
+
+      case 'dong':
+      case 'raw':
+        this.heartbeat.emit(e.name + ':' + e.payload)
+        break
+
+      default:
+        console.warn('onIo() unknown event name: %s[%s]', e.name, e.payload)
+        break
+    }
   }
 
   startTimer() {
+    this.ender = new Subject()
+
     // https://github.com/angular/protractor/issues/3349#issuecomment-232253059
     // https://github.com/juliemr/ngconf-2016-zones/blob/master/src/app/main.ts#L38
     this.ngZone.runOutsideAngular(() => {
       this.timer = Observable.interval(3000)
+          .do(i => { console.log('do: %d', i) })
           .takeUntil(this.ender)
+          // .publish()
+          .share()
     })
 
-    this.timer.subscribe(t => {
+    this.timerSub = this.timer.subscribe(t => {
       this.counter = t
 
       this.ioService.ding(this.counter)
-      // const dong = 'faint, no io service #' + t
       // this.message.emit('#' + this.token + ':' + dong)
-
-      // const ioEvent: IoEvent = {
-      //   name: 'test'
-      //   , data: 'test from timer'
-      // }
-      // this.ioService.io().next(ioEvent)
-      // console.log(dong)
     })
 
   }
 
   endTimer() {
+    this.timerSub.unsubscribe()
+    this.timer = null
+
     this.ender.next()
+    this.ender = null
   }
 
 }

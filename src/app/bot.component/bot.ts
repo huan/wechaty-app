@@ -8,6 +8,11 @@ import {
   , ActivatedRoute
 } from '@angular/router'
 
+import { Brolog } from 'brolog'
+// const log = new Brolog()
+
+// log.level('SILLY')
+
 import { WechatyComponent } from '../wechaty.component/index'
 
 @Component({
@@ -25,8 +30,12 @@ export class BotComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute
+    // , private log: Brolog
   ) {
+    // const log = new Brolog()
     console.log('bot constuctor')
+    // log.verbose('Bot', 'constructor() verbose')
+    // log.warn('Bot', 'constructor() warn')
   }
 
   ngOnInit() {
@@ -45,7 +54,7 @@ export class BotComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe()
   }
 
-  log(e) {
+  onMessage(e) {
     console.log('BotComponent.log()')
     console.log(e)
   }
