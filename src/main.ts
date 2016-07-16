@@ -17,7 +17,7 @@ bootstrap(AppComponent, [
   HTTP_PROVIDERS
   , APP_ROUTER_PROVIDERS
   , AuthService
-  , Brolog
+  , Brolog.factory('VERBOSE')
   , disableDeprecatedForms()
   , provideForms()
 ])

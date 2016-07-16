@@ -1,8 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { 
+  Component
+  , Inject
+  , OnInit
+  , OnDestroy 
+} from '@angular/core'
 import { ROUTER_DIRECTIVES, Router } from '@angular/router'
 
 import { WechatyComponent }  from './wechaty.component/index'
 import { AuthService }       from './auth.service/index'
+
+import { Brolog } from 'brolog'
 
 @Component({
   moduleId: module.id
@@ -24,12 +31,13 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService
     , private router: Router
+    , @Inject(Brolog) private log: Brolog
    ) {
-    console.log('app constructor')
+    log.verbose('App', 'constructor()')
   }
 
   ngOnInit() {
-    console.log('app oninit')
+    this.log.verbose('App', 'ngOnInit()')
 
     let link = ['/login']
     if (this.authService.authed()) {
@@ -39,14 +47,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('app ondestroy')
-  }
-
-  log(e) {
-    console.log(e)
+    this.log.verbose('App', 'ngOnDestroy()')
   }
 
   logout() {
+    this.log.verbose('App', 'logout()')
     this.authService.logout()
   }
 }

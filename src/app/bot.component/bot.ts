@@ -2,6 +2,7 @@ import {
   Component
   , OnInit
   , OnDestroy
+  , Inject
  } from '@angular/core'
 import {
   RouterConfig
@@ -9,15 +10,12 @@ import {
 } from '@angular/router'
 
 import { Brolog } from 'brolog'
-// const log = new Brolog()
-
-// log.level('SILLY')
 
 import { WechatyComponent } from '../wechaty.component/index'
 
 @Component({
   moduleId: module.id
-  , selector: 'wechaty bot'
+  , selector: 'bot'
   , templateUrl: 'bot.html'
   , directives: [WechatyComponent]
   , styleUrls: ['bot.css']
@@ -30,16 +28,13 @@ export class BotComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute
-    // , private log: Brolog
+    , @Inject(Brolog) private log: Brolog
   ) {
-    // const log = new Brolog()
-    console.log('bot constuctor')
-    // log.verbose('Bot', 'constructor() verbose')
-    // log.warn('Bot', 'constructor() warn')
+    log.verbose('Bot', 'constructor()')
   }
 
   ngOnInit() {
-    console.log('bot on init')
+    this.log.verbose('Bot', 'ngOnInit()')
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id']
       // this.heroService.getHero(id)
@@ -50,13 +45,12 @@ export class BotComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('bot on destroy')
+    this.log.verbose('Bot', 'ngOnDestroy()')
     this.sub.unsubscribe()
   }
 
   onMessage(e) {
-    console.log('BotComponent.log()')
-    console.log(e)
+    this.log.verbose('Bot', 'onMessage(%s)', e)
   }
 }
 

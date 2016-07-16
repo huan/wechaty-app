@@ -1,7 +1,10 @@
 import {
   Injectable
+  , Inject
 } from '@angular/core'
 import { User } from '../shared/user'
+
+import { Brolog } from 'brolog'
 
 @Injectable()
 export class AuthService {
@@ -10,8 +13,10 @@ export class AuthService {
   private token: string
   private user: User
 
-  constructor() {
-    console.log('AuthService.constructor()')
+  constructor(
+    @Inject(Brolog) private log: Brolog
+  ) {
+    log.verbose('AuthService', 'constructor()')
   }
 
   authed() { return this.authStatus }

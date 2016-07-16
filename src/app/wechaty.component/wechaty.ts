@@ -1,5 +1,6 @@
 import {
   Component
+  , Inject
   , OnInit
   , OnDestroy
   , EventEmitter
@@ -13,6 +14,8 @@ import {
   , Subscription
 } from 'rxjs/Rx'
 
+import { Brolog } from 'brolog'
+
 import { MessageComponent } from '../message.component/index'
 import { IoService, IoEvent } from '../io.service/index'
 
@@ -24,7 +27,6 @@ import { IoService, IoEvent } from '../io.service/index'
   , directives: [
     MessageComponent
   ]
-  // , providers: [IoService]
   , styleUrls: ['wechaty.css']
 })
 
@@ -49,14 +51,18 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
   constructor(
     private ngZone: NgZone
+    , @Inject(Brolog) private log: Brolog
   ) {
-    console.log('Wechaty.constructor() with token: ' + this.token)
+    log.verbose('Wechaty', 'constructor() with token: %s', this.token)
   }
 
   ngOnInit() {
-    console.log('Wechaty.ngOninit()')
+    this.log.verbose('Wechaty', 'ngOninit()')
 
-    const ioService = this.ioService = new IoService(this.token)
+    const ioService = this.ioService = new IoService({
+      token: this.token
+      , logger: this.log
+    })
 
     this.ioSubscription = ioService.io()
                           .subscribe(this.onIo.bind(this))
@@ -72,11 +78,11 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ioSubscription = null
     }
 
-    console.log('wechaty ondestroy')
+    this.log.verbose('Wechaty', 'ngOnDestroy()')
   }
 
   onIo(e: IoEvent) {
-    console.log('Wechaty.onIo(%s)', e.name)
+    this.log.verbose('Wechaty', 'onIo(%s)', e.name)
     // console.log(e.payload)
 
     switch(e.name) {
@@ -105,7 +111,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
         break
 
       default:
-        console.warn('onIo() unknown event name: %s[%s]', e.name, e.payload)
+        this.log.warn('Wechaty', 'onIo() unknown event name: %s[%s]', e.name, e.payload)
         break
     }
   }
