@@ -9,9 +9,6 @@ import {
 } from '@angular/router'
 
 import { Brolog } from 'brolog'
-// const log = new Brolog()
-
-// log.level('SILLY')
 
 import { WechatyComponent } from '../wechaty.component/index'
 
@@ -28,42 +25,59 @@ export class BotComponent implements OnInit, OnDestroy {
 
   sub: any
 
+  messages = ['1st message']
+
   constructor(
     private route: ActivatedRoute
-    // , private log: Brolog
+    , private log: Brolog
   ) {
-    // const log = new Brolog()
-    console.log('bot constuctor')
-    // log.verbose('Bot', 'constructor() verbose')
-    // log.warn('Bot', 'constructor() warn')
+    log.verbose('Bot', 'constructor()')
   }
 
   ngOnInit() {
-    console.log('bot on init')
+    this.log.verbose('Bot', 'ngOnInit()')
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id']
       // this.heroService.getHero(id)
       //     .then(hero => this.hero = hero)
     })
 
+    this.messages.push('init')
     this.token = 'zixia'
   }
 
   ngOnDestroy() {
-    console.log('bot on destroy')
+    this.log.verbose('Bot', 'ngOnDestroy')
     this.sub.unsubscribe()
   }
 
   onMessage(e) {
-    console.log('BotComponent.log()')
-    console.log(e)
+    this.log.verbose('Bot', 'onMessage()')
+    this.log.verbose('Bot', e)
+
+    this.messages.push(e)
   }
+
+  onHeartbeat(e) {
+    this.log.verbose('Bot', 'onHeartbeat(%s)', e)
+    this.messages.push(e)
+  }
+  onScan(e) {
+    this.messages.push(e)
+  }
+  onLogin(e) {
+    this.messages.push(e)
+  }
+  onLogout(e) {
+    this.messages.push(e)
+  }
+
 }
 
 
 export const BotRoutes: RouterConfig = [
   {
-    path: 'bot/:id',
-    component: BotComponent
+    path: 'bot/:id'
+    , component: BotComponent
   }
-];
+]

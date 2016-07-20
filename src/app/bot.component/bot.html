@@ -2,12 +2,13 @@
   Bot Detail Id: {{ id }}
 </h1>
 
-<script>
-  messages = []
-</script>
 <wechaty
   token="zixia"
   (message)="onMessage($event)"
+  (heartbeat)="onHeartbeat($event)"
+  (scan)="onScan($event)"
+  (login)="onLogin($event)"
+  (logout)="onLogout($event)"
 >
   <h1>Wechaty Bot Id: {{ id }} token: {{ token }}</h1>
   <div>counter: {{ counter }}</div>

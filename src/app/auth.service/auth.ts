@@ -1,6 +1,9 @@
 import {
   Injectable
 } from '@angular/core'
+
+import { Brolog } from 'brolog'
+
 import { User } from '../shared/user'
 
 @Injectable()
@@ -10,13 +13,17 @@ export class AuthService {
   private token: string
   private user: User
 
-  constructor() {
-    console.log('AuthService.constructor()')
+  constructor(
+    private log: Brolog
+  ) {
+    this.log.verbose('AuthService', 'constructor()')
   }
 
   authed() { return this.authStatus }
 
   auth(username: string, password: string): boolean {
+    this.log.verbose('AuthService', 'auth(%s, %s)', username, password)
+
     this.authStatus = false
 
     if (password) {
@@ -33,6 +40,7 @@ export class AuthService {
   }
 
   setToken(token:string): string {
+    this.log.verbose('AuthService', 'setToken(%s)', token)
     return this.token = token
   }
 
@@ -41,6 +49,8 @@ export class AuthService {
   }
 
   logout() {
+    this.log.verbose('AuthService', 'logout()')
+
     this.authStatus = false
     this.token = ''
     this.user = null
