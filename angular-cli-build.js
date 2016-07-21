@@ -4,7 +4,7 @@
 
 /* global require, module */
 
-var Angular2App = require('angular-cli/lib/broccoli/angular2-app');
+var Angular2App = require('angular-cli/lib/broccoli/angular2-app')
 
 module.exports = function(defaults) {
   return new Angular2App(defaults, {
@@ -16,6 +16,7 @@ module.exports = function(defaults) {
       'reflect-metadata/**/*.+(ts|js|js.map)',
       'rxjs/**/*.+(js|js.map)',
       '@angular/**/*.+(js|js.map)'
+      , 'brolog/**/*.js'
     ]
-  });
-};
+  })
+}

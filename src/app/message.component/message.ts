@@ -1,5 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { 
+  Component
+  , Inject
+  , OnInit
+  , OnDestroy 
+} from '@angular/core'
 import { RouterConfig } from '@angular/router'
+
+import { Brolog } from 'brolog'
 
 // import { WechatyComponent } from './wechaty.component'
 
@@ -9,30 +16,27 @@ import { RouterConfig } from '@angular/router'
   , templateUrl: 'message.html'
 
   , directives: [
-    // WechatyComponent
   ]
   // , styleUrls: ['app/app.component.css']
-  // , providers: [HeroService]
 })
 
 export class MessageComponent implements OnInit, OnDestroy {
   title = 'Hello message'
 
-  constructor() {
-    console.log('message constructor')
+  constructor(
+    @Inject(Brolog) private log: Brolog
+  ) {
+    log.verbose('MessageComponent', 'constructor()')
   }
 
   ngOnInit() {
-    console.log('message oninit')
+    this.log.verbose('MessageComponent', 'ngOnInit()')
   }
 
   ngOnDestroy() {
-    console.log('message ondestroy')
+    this.log.verbose('MessageComponent', 'ngOnDestroy()')
   }
 
-  log(e) {
-    console.log(e)
-  }
 }
 
 export const MessageRoutes: RouterConfig = [

@@ -14,7 +14,7 @@ Wechaty APP Web Component
 1. [SystemJS & AngularFire for Angular 2](https://www.youtube.com/watch?v=ngnSOTSS8Q8)
 2.
 ## Desktop App
-
+1. [Angular 2 0 Module Loader System JS Loading](https://www.youtube.com/watch?v=sQ0_nQM7YD8)
 1. [Angular2 and Electron - The definitive guide](https://www.xplatform.rocks/2016/02/14/angular2-and-electron-the-definitive-guide/)
 2. ...
 
