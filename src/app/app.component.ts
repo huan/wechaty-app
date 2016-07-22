@@ -1,10 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import {
+  Component
+  , Inject
+  , OnInit
+  , OnDestroy
+} from '@angular/core'
 import { ROUTER_DIRECTIVES, Router } from '@angular/router'
 
 import { Brolog } from 'brolog'
 
 import { WechatyComponent }  from './wechaty.component/index'
 import { AuthService }       from './auth.service/index'
+
+import { Brolog } from 'brolog'
 
 @Component({
   moduleId: module.id
@@ -46,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    this.log.verbose('App', 'logout()')
     this.authService.logout()
   }
 }

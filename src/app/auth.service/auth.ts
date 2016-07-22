@@ -1,10 +1,13 @@
 import {
   Injectable
+  , Inject
 } from '@angular/core'
 
 import { Brolog } from 'brolog'
 
 import { User } from '../shared/user'
+
+import { Brolog } from 'brolog'
 
 @Injectable()
 export class AuthService {

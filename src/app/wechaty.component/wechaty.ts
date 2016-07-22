@@ -1,5 +1,6 @@
 import {
   Component
+  , Inject
   , OnInit
   , OnDestroy
   , EventEmitter
@@ -80,10 +81,13 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ioSubscription.unsubscribe()
       this.ioSubscription = null
     }
+
+    this.log.verbose('Wechaty', 'ngOnDestroy()')
   }
 
   onIo(e: IoEvent) {
-    this.log.verbose('Wechaty', 'onIo() %s:%s', e.name, e.payload)
+    this.log.verbose('Wechaty', 'onIo(%s)', e.name)
+    // console.log(e.payload)
 
     switch(e.name) {
       case 'heartbeat':

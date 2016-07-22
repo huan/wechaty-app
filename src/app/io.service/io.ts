@@ -1,9 +1,7 @@
 import {
   Injector
-  , OpaqueToken
-  // Injectable
-  // OnInit & OnDestroy only work for @Component. http://stackoverflow.com/a/36189206/1123955
 } from '@angular/core'
+
 import {
   Observable
   , Subscriber
@@ -89,14 +87,14 @@ export class IoService {
   }
 
   wsSend(e: IoEvent) {
-    this.log.verbose('IoService', 'wsSend(' + e.name + ')')
+    this.log.verbose('IoService', 'wsSend(%s)', e.name)
 
     const message = JSON.stringify(e)
 
     if (this.alive()) {
       // 1. check buffer for send old ones
       while (this.sendBuffer.length) {
-        this.log.verbose('IoService', 'wsSend() buffer processing: length: ' + this.sendBuffer.length)
+        this.log.verbose('IoService', 'wsSend() buffer processing: length: %d', this.sendBuffer.length)
 
         let m = this.sendBuffer.shift()
         this.websocket.send(m)
@@ -159,8 +157,7 @@ function onOpen(e) {
 }
 
 function onClose(e) {
-  this.log.verbose('IoService', 'onClose(' + e + ')')
-  this.log.verbose('IoService', e)
+  this.log.verbose('IoService.onClose(%s)', e)
 
   this.websocket = null
   setTimeout(_ => {
@@ -173,8 +170,7 @@ function onClose(e) {
 }
 
 function onError(e) {
-  this.log.verbose('IoService', 'onError(' + e + ')')
-  console.warn(e)
+  this.log.verbose('IoService', 'onError(%s)', e)
 
   this.websocket = null
   // log.verbose('IoService', 'xixi %s', 'haha')

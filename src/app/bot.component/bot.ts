@@ -2,6 +2,7 @@ import {
   Component
   , OnInit
   , OnDestroy
+  , Inject
  } from '@angular/core'
 import {
   RouterConfig
@@ -14,11 +15,12 @@ import { WechatyComponent } from '../wechaty.component/index'
 
 @Component({
   moduleId: module.id
-  , selector: 'wechaty bot'
+  , selector: 'bot'
   , templateUrl: 'bot.html'
   , directives: [WechatyComponent]
   , styleUrls: ['bot.css']
 })
+
 export class BotComponent implements OnInit, OnDestroy {
   id: number
   token: string
@@ -47,7 +49,7 @@ export class BotComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.log.verbose('Bot', 'ngOnDestroy')
+    this.log.verbose('Bot', 'ngOnDestroy()')
     this.sub.unsubscribe()
   }
 
@@ -73,7 +75,6 @@ export class BotComponent implements OnInit, OnDestroy {
   }
 
 }
-
 
 export const BotRoutes: RouterConfig = [
   {
