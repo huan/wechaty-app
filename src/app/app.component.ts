@@ -11,8 +11,6 @@ import { Brolog } from 'brolog'
 import { WechatyComponent }  from './wechaty.component/index'
 import { AuthService }       from './auth.service/index'
 
-import { Brolog } from 'brolog'
-
 @Component({
   moduleId: module.id
   , selector: 'app-root'

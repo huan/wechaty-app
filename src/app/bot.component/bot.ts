@@ -11,7 +11,7 @@ import {
 
 import { Brolog } from 'brolog'
 
-import { WechatyComponent } from '../wechaty.component/index'
+import { WechatyComponent, ScanEvent } from '../wechaty.component/index'
 
 @Component({
   moduleId: module.id
@@ -28,6 +28,9 @@ export class BotComponent implements OnInit, OnDestroy {
   sub: any
 
   messages = ['1st message']
+  logedIn = false
+  scan: ScanEvent
+  counter = 0
 
   constructor(
     private route: ActivatedRoute
@@ -54,24 +57,25 @@ export class BotComponent implements OnInit, OnDestroy {
   }
 
   onMessage(e) {
-    this.log.verbose('Bot', 'onMessage()')
-    this.log.verbose('Bot', e)
-
+    this.log.verbose('Bot', 'onMessage(%s)', e)
     this.messages.push(e)
   }
-
   onHeartbeat(e) {
     this.log.verbose('Bot', 'onHeartbeat(%s)', e)
+    this.counter++
     this.messages.push(e)
   }
-  onScan(e) {
-    this.messages.push(e)
+  onScan(e: ScanEvent) {
+    this.log.verbose('Bot', 'onScan(%d: %s)', e.code, e.url)
+    this.scan = e
   }
   onLogin(e) {
-    this.messages.push(e)
+    this.log.verbose('Bot', 'onLogin(%s)', e)
+    this.logedIn = true
   }
   onLogout(e) {
-    this.messages.push(e)
+    this.log.verbose('Bot', 'onLogout(%s)', e)
+    this.logedIn = false
   }
 
 }

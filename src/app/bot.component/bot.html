@@ -13,6 +13,24 @@
   <h1>Wechaty Bot Id: {{ id }} token: {{ token }}</h1>
   <div>counter: {{ counter }}</div>
 
+  <div [ngSwitch]="logedIn">
+
+    <div *ngSwitchCase="true">
+      Congratulations! Wechaty is on duty.
+    </div>
+
+    <div *ngSwitchDefault>
+      <div *ngIf="scan?.url">
+        <img [src]="scan.url"/>
+      </div>
+      <!-- ELSE -->
+      <div *ngIf="!(scan?.url)">
+        Wechaty Initializing...
+      </div>
+    </div>
+
+  </div>
+
   <ol>
     <li *ngFor="let message of messages">
       {{ message }}

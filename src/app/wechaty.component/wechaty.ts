@@ -20,6 +20,14 @@ import { Brolog } from 'brolog'
 import { MessageComponent } from '../message.component/index'
 import { IoService, IoEvent } from '../io.service/index'
 
+/**
+ * for payload
+ */
+export interface ScanEvent {
+  url: string
+  code: number
+}
+
 @Component({
   moduleId: module.id
   , selector: 'wechaty'
@@ -94,7 +102,12 @@ export class WechatyComponent implements OnInit, OnDestroy {
         this.heartbeat.emit(e.payload)
         break
       case 'scan':
-        this.scan.emit(e.payload)
+        const scanEvent: ScanEvent = {
+          code: e.payload.code
+          , url: e.payload.url
+        }
+
+        this.scan.emit(scanEvent)
         break
       case 'message':
         this.message.emit(e.payload)
