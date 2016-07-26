@@ -14,14 +14,12 @@ import { CONFIG } from '../shared/config'
 
 export type WechatyEventName = 
   'scan'
-  | 'login'
-  | 'logout'
-  | 'ding'
-  | 'dong'
+  | 'login' | 'logout'
+  | 'ding' | 'dong'
+  | 'reset' | 'shutdown'
   | 'heartbeat'
-  | 'error'
-  | 'reset'
   | 'update'
+  | 'error'
 
 export type ServerEventName = 
   'sys'

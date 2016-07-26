@@ -102,13 +102,9 @@ export class WechatyComponent implements OnInit, OnDestroy {
   }
 
   onIo(e: IoEvent) {
-    this.log.verbose('Wechaty', 'onIo(%s)', e.name)
-    // console.log(e.payload)
+    this.log.silly('Wechaty', 'onIo#%d(%s)', this.counter++, e.name)
 
     switch(e.name) {
-      case 'heartbeat':
-        this.heartbeat.emit(e.payload)
-        break
       case 'scan':
         this.scan.emit(<ScanInfo>e.payload)
         break
@@ -130,6 +126,9 @@ export class WechatyComponent implements OnInit, OnDestroy {
       case 'raw':
         this.heartbeat.emit(e.name + '[' + e.payload + ']')
         break
+      case 'heartbeat':
+        this.heartbeat.emit(e.payload)
+        break
 
       case 'sys':
         this.log.silly('Wechaty', 'onIo(%s): %s', e.name, e.payload)
@@ -139,6 +138,28 @@ export class WechatyComponent implements OnInit, OnDestroy {
         this.log.warn('Wechaty', 'onIo() unknown event name: %s[%s]', e.name, e.payload)
         break
     }
+  }
+
+  reset(reason) {
+    this.log.verbose('Wechaty', 'reset(%s)', reason)
+
+    const resetEvent: IoEvent = {
+      name: 'reset'
+      , payload: reason
+    }
+    this.ioService.io()
+        .next(resetEvent)
+  }
+
+  shutdown(reason) {
+    this.log.verbose('Wechaty', 'shutdown(%s)', reason)
+
+    const shutdownEvent: IoEvent = {
+      name: 'shutdown'
+      , payload: reason
+    }
+    this.ioService.io()
+        .next(shutdownEvent)
   }
 
   startTimer() {

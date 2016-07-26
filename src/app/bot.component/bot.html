@@ -2,22 +2,36 @@
   Bot Detail Id: {{ id }}
 </h1>
 
+<script>
+  function test(e) {
+    console.log('test', e)
+  }
+
+  test('init')
+  console.log('####')
+</script>
+
 <wechaty
-  token="zixia"
+  #wechaty
+  [token]="token"
+
+  onheartbeat="test()"
+  
   (message)="onMessage($event)"
   (heartbeat)="onHeartbeat($event)"
   (scan)="onScan($event)"
   (login)="onLogin($event)"
   (logout)="onLogout($event)"
 >
-  <h1>Wechaty Bot Id: {{ id }} token: {{ token }}</h1>
-  <div>counter: {{ counter }}</div>
+  <h1>Wechaty Bot Id: {{ id }}</h1>
 
-  <div [ngSwitch]="logedIn">
+  <p>token: {{ token }}, heartbeat {{ hbCounter }}</p>
+
+  <div [ngSwitch]="!!user">
 
     <div *ngSwitchCase="true">
       Congratulations! Wechaty is on duty.
-      <p>Logined with user {{ user?.name }}</p>
+      <p>Logined with user {{ user.name }}</p>
     </div>
 
     <div *ngSwitchDefault>
@@ -37,4 +51,8 @@
       {{ message }}
     </li>
   </ol>
+
+  <button (click)="reset(wechaty)">Reset</button>
+  <button (click)="shutdown(wechaty)">Shutdown</button>
+
 </wechaty>

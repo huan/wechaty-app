@@ -8,6 +8,9 @@ import {
   RouterConfig
   , ActivatedRoute
 } from '@angular/router'
+import {
+  Subscription
+} from 'rxjs'
 
 import { Brolog } from 'brolog'
 
@@ -25,15 +28,14 @@ export class BotComponent implements OnInit, OnDestroy {
   id: number
   token: string
 
-  sub: any
+  routeSub: Subscription
 
-  messages = ['1st message']
-  logedIn = false
+  messages: string[]
 
   scan: ScanInfo
   user: UserInfo
   
-  counter = 0
+  hbCounter = 70
 
 
   constructor(
@@ -45,19 +47,16 @@ export class BotComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.log.verbose('Bot', 'ngOnInit()')
-    this.sub = this.route.params.subscribe(params => {
+    this.routeSub = this.route.params.subscribe(params => {
       this.id = +params['id']
-      // this.heroService.getHero(id)
-      //     .then(hero => this.hero = hero)
     })
 
-    this.messages.push('init')
     this.token = 'zixia'
   }
 
   ngOnDestroy() {
     this.log.verbose('Bot', 'ngOnDestroy()')
-    this.sub.unsubscribe()
+    this.routeSub.unsubscribe()
   }
 
   onMessage(e) {
@@ -65,9 +64,9 @@ export class BotComponent implements OnInit, OnDestroy {
     this.messages.push(e)
   }
   onHeartbeat(e) {
-    this.log.verbose('Bot', 'onHeartbeat(%s)', e)
-    this.counter++
-    this.messages.push(e)
+    this.log.silly('Bot', 'onHeartbeat(%s)', e)
+    this.hbCounter++
+    // this.messages.push(e)
   }
   onScan(scan: ScanInfo) {
     this.log.verbose('Bot', 'onScan(%d: %s)', scan.code, scan.url)
@@ -75,15 +74,25 @@ export class BotComponent implements OnInit, OnDestroy {
   }
   onLogin(user: UserInfo) {
     this.log.verbose('Bot', 'onLogin(%s)', user.name)
-    this.logedIn = true
     this.user = user
+    this.scan = null
   }
   onLogout(e: UserInfo) {
     this.log.verbose('Bot', 'onLogout(%s)', e.name)
-    this.logedIn = false
     this.user = null
   }
 
+  reset(wechaty: WechatyComponent) {
+    this.log.verbose('Bot', 'reset()')
+    this.scan = this.user = null
+    wechaty.reset('by web bot component')
+  }
+
+  shutdown(wechaty: WechatyComponent) {
+    this.log.verbose('Bot', 'shutdown()')
+    this.scan = this.user = null
+    wechaty.shutdown('by web bot component')    
+  }
 }
 
 export const BotRoutes: RouterConfig = [
