@@ -1,25 +1,15 @@
-<!-- h1 class="zixia">{{ title }}</h1 -->
-<!-- nav>
+<h1>{{ title }}</h1>
+<nav>
   <span>
-    <a [routerLink]="['/wechaty']" routerLinkActive="active">Dashboard</a>
-    <a [routerLink]="['/message']" routerLinkActive="active">My Bots</a>
+    <a [routerLink]="['/bot/1']" routerLinkActive="active">My Bot</a>
+    <!-- a [routerLink]="['/message']" routerLinkActive="active">My Bots</a -->
     <a [routerLink]="['/about']" routerLinkActive="active">About</a>
   </span>
   <span align="end">
-    <a [routerLink]="['/login']" routerLinkActive="active">Login</a>
-    <a (click)="logout()">Logout</a>
+    <a *ngIf="!authService.authed()" [routerLink]="['/login']" routerLinkActive="active">Login</a>
+    <a *ngIf="authService.authed()" (click)="logout()">Logout</a>
   </span>
 
-</nav -->
-<!-- wechaty token=zixia (message)='log($event)'></wechaty -->
+</nav>
 
 <router-outlet></router-outlet>
-
-<!--
-<wechaty>
-  <message>
-    message lalala
-  </message>
-</wechaty>
-
--->

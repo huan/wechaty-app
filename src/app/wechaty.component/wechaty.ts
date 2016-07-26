@@ -188,11 +188,16 @@ export class WechatyComponent implements OnInit, OnDestroy {
   endTimer() {
     this.log.verbose('Wechaty', 'endTimer()')
 
-    this.timerSub.unsubscribe()
+    if (this.timerSub) {
+      this.timerSub.unsubscribe()
+      this.timerSub = null
+    }
     this.timer = null
 
-    this.ender.next(null)
-    this.ender = null
+    if (this.ender) {
+      this.ender.next(null)
+      this.ender = null
+    }
   }
 
 }

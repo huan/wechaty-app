@@ -26,7 +26,7 @@ import { AuthService }       from './auth.service/index'
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Wechaty APP -  Cloud Manager for your ChatBot'
+  title = 'Wechaty APP -  Cloud Manager for your Boties'
 
   constructor(
     private authService: AuthService

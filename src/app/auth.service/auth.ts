@@ -20,7 +20,7 @@ export class AuthService {
     this.log.verbose('AuthService', 'constructor()')
   }
 
-  authed() { return this.authStatus }
+  authed(): boolean { return !!this.authStatus }
 
   auth(username: string, password: string): boolean {
     this.log.verbose('AuthService', 'auth(%s, %s)', username, password)
@@ -30,11 +30,13 @@ export class AuthService {
     if (password) {
       if (username === 'zixia') {
         this.authStatus = true
+        this.user.name = 'zixia'
       }
     } else {
       const token = username
-      if (token === 'wechaty') {
+      if (token) {
         this.authStatus = true
+        this.token = token
       }
     }
     return this.authStatus

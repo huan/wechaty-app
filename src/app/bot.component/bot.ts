@@ -35,8 +35,7 @@ export class BotComponent implements OnInit, OnDestroy {
   scan: ScanInfo
   user: UserInfo
   
-  hbCounter = 70
-
+  hbCounter = 0
 
   constructor(
     private route: ActivatedRoute
@@ -87,7 +86,6 @@ export class BotComponent implements OnInit, OnDestroy {
     this.scan = this.user = null
     wechaty.reset('by web bot component')
   }
-
   shutdown(wechaty: WechatyComponent) {
     this.log.verbose('Bot', 'shutdown()')
     this.scan = this.user = null
