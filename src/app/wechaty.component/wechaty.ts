@@ -23,9 +23,17 @@ import { IoService, IoEvent } from '../io.service/index'
 /**
  * for payload
  */
-export interface ScanEvent {
+export interface ScanInfo {
   url: string
   code: number
+}
+
+export interface UserInfo {
+  uin: number
+  name: string
+  remark: string
+  sex: number
+  signature: string
 }
 
 @Component({
@@ -40,19 +48,19 @@ export interface ScanEvent {
 })
 
 export class WechatyComponent implements OnInit, OnDestroy {
-  @Output() message   = new EventEmitter()
-  @Output() scan      = new EventEmitter()
-  @Output() login     = new EventEmitter()
-  @Output() logout    = new EventEmitter()
-  @Output() error     = new EventEmitter()
-  @Output() heartbeat = new EventEmitter()
+  @Output() message   = new EventEmitter<string>()
+  @Output() scan      = new EventEmitter<ScanInfo>()
+  @Output() login     = new EventEmitter<UserInfo>()
+  @Output() logout    = new EventEmitter<UserInfo>()
+  @Output() error     = new EventEmitter<Error>()
+  @Output() heartbeat = new EventEmitter<any>()
 
   @Input() token: string = ''
 
   private timer: Observable<any>
   private timerSub: Subscription
   private ioSubscription: any
-  private ender: any//Subject<any>
+  private ender: Subject<any>
 
   private ioService: IoService
 
@@ -102,29 +110,29 @@ export class WechatyComponent implements OnInit, OnDestroy {
         this.heartbeat.emit(e.payload)
         break
       case 'scan':
-        const scanEvent: ScanEvent = {
-          code: e.payload.code
-          , url: e.payload.url
-        }
-
-        this.scan.emit(scanEvent)
+        this.scan.emit(<ScanInfo>e.payload)
         break
       case 'message':
         this.message.emit(e.payload)
         break
       case 'login':
-        this.login.emit(e.payload)
+        this.login.emit(<UserInfo>e.payload)
         break
       case 'logout':
-        this.logout.emit(e.payload)
+        this.logout.emit(<UserInfo>e.payload)
         break
       case 'error':
-        this.error.emit(e.payload)
+        this.error.emit(new Error(e.payload))
         break
 
+      case 'ding':
       case 'dong':
       case 'raw':
-        this.heartbeat.emit(e.name + ':' + e.payload)
+        this.heartbeat.emit(e.name + '[' + e.payload + ']')
+        break
+
+      case 'sys':
+        this.log.silly('Wechaty', 'onIo(%s): %s', e.name, e.payload)
         break
 
       default:
@@ -162,7 +170,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
     this.timerSub.unsubscribe()
     this.timer = null
 
-    this.ender.next()
+    this.ender.next(null)
     this.ender = null
   }
 

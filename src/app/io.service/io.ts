@@ -10,16 +10,30 @@ import {
 
 import { Brolog } from 'brolog'
 
-import { config } from '../shared/config'
+import { CONFIG } from '../shared/config'
 
-export interface IoEvent {
-  name: string
+export type WechatyEventName = 
+  'scan'
+  | 'login'
+  | 'logout'
+  | 'ding'
+  | 'dong'
+  | 'heartbeat'
+  | 'error'
+  | 'reset'
+  | 'update'
+
+export type ServerEventName = 
+  'sys'
+
+export type IoEventName = 'raw' | WechatyEventName | ServerEventName
+
+export interface IoEvent { 
+  name: IoEventName
   payload: any
 }
 
 export class IoService {
-  // private ENDPOINT = 'ws://jp.aka.cn:8080/websocket/token/'
-  // private ENDPOINT = 'wss://api.wechaty.io/websocket/token/'
   private wsProtocol = 'web|0.0.1'
 
   private websocket: WebSocket
@@ -62,7 +76,7 @@ export class IoService {
   }
 
   endPoint(): string {
-    return config.ioEndPoint + this.token
+    return CONFIG.ioEndPoint + this.token
   }
 
   alive() {
@@ -154,10 +168,17 @@ export class IoService {
 
 function onOpen(e) {
   this.log.verbose('IoService', 'onOpen()')
+
+  this.log.verbose('IoService', 'onOpen() require update from io')
+  const ioEvent: IoEvent = {
+    name: 'update'
+    , payload: 'onOpen'
+  }
+  this.ioSubject.next(ioEvent)
 }
 
 function onClose(e) {
-  this.log.verbose('IoService.onClose(%s)', e)
+  this.log.verbose('IoService', 'onClose(%s)', e)
 
   this.websocket = null
   setTimeout(_ => {
@@ -186,9 +207,8 @@ function onError(e) {
  */
 function onMessage(message)
 {
-  this.log.verbose('IoService', 'onMessage()')
-
   const data = message.data // WebSocket data
+  this.log.verbose('IoService', 'onMessage(%s)', data)
 
   let ioEvent: IoEvent = {
     name: 'raw'
@@ -200,7 +220,7 @@ function onMessage(message)
     ioEvent.name = obj.name
     ioEvent.payload = obj.payload
   } catch (e) {
-    this.log.verbose('IoService', 'onMessage parse message fail.')
+    this.log.warn('IoService', 'onMessage parse message fail.')
   }
 
   this.subscriber.next(ioEvent)
