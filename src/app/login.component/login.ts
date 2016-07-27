@@ -21,12 +21,12 @@ import { AuthService } from '../auth.service/index'
 
 @Component({
   moduleId: module.id
-  , selector: 'loginout'
-  , templateUrl: 'loginout.html'
-  , styleUrls: ['loginout.css']
+  , selector: 'login'
+  , templateUrl: 'login.html'
+  , styleUrls: ['login.css']
 })
 
-export class LoginoutComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   title = 'Wechaty Login'
   // sub: any
 
@@ -82,18 +82,11 @@ export class LoginoutComponent implements OnInit, OnDestroy {
           }
         )
   }
-
-  logout() {
-    this.log.verbose('LoginoutComponent', 'logout()')
-
-    const link = ['/']
-    this.router.navigate(link)
-  }
 }
 
-export const LoginoutRoutes: RouterConfig = [
+export const LoginRoutes: RouterConfig = [
   {
     path: 'login',
-    component: LoginoutComponent
+    component: LoginComponent
   }
 ]

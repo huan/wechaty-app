@@ -4,17 +4,24 @@ import {
   , OnDestroy
   , Inject
  } from '@angular/core'
+
 import {
   RouterConfig
   , ActivatedRoute
 } from '@angular/router'
+
 import {
   Subscription
 } from 'rxjs'
 
 import { Brolog } from 'brolog'
 
-import { WechatyComponent, ScanInfo, UserInfo } from '../wechaty.component/index'
+import {
+  WechatyComponent
+  , ScanInfo
+  , UserInfo 
+} from '../wechaty.component/index'
+
 import { AuthService } from '../auth.service/index'
 import { AuthGuardService } from '../auth-guard.service/index'
 
@@ -51,7 +58,8 @@ export class BotComponent implements OnInit, OnDestroy {
       this.id = +params['id']
     })
 
-    this.token = 'zixia'
+    // TBD: use right bot token
+    this.token = this.authService.user.name
   }
 
   ngOnDestroy() {

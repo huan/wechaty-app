@@ -14,14 +14,16 @@ export class AuthService {
   loggedIn = false
   redirectUrl: string
 
-  private token: string
-  private user: User
+  token: string
+  user: User
 
   constructor(
     private log: Brolog
   ) {
     this.log.verbose('AuthService', 'constructor()')
 
+    // TODO: https://toddmotto.com/angular-2-authentication
+    
     this.token = localStorage.getItem('token')
   }
 

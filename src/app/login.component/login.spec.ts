@@ -5,18 +5,18 @@ import {
   async, inject
 } from '@angular/core/testing'
 
-import { LoginoutComponent } from './'
+import { LoginComponent } from './'
 
-beforeEachProviders(() => [LoginoutComponent])
+beforeEachProviders(() => [LoginComponent])
 
 describe('LoginoutComponent Test', () => {
   it('should create the component',
-      inject([LoginoutComponent], (c: LoginoutComponent) => {
+      inject([LoginComponent], (c: LoginComponent) => {
     expect(c).toBeTruthy()
   }))
 
   it('should have as content "app works!"',
-      inject([LoginoutComponent], (c: LoginoutComponent) => {
+      inject([LoginComponent], (c: LoginComponent) => {
     expect(c.title).toEqual('Loginout Component Title')
   }))
 })

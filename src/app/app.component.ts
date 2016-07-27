@@ -8,7 +8,6 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router'
 
 import { Brolog } from 'brolog'
 
-import { WechatyComponent }  from './wechaty.component/index'
 import { AuthService }       from './auth.service/index'
 
 @Component({
@@ -17,11 +16,7 @@ import { AuthService }       from './auth.service/index'
   , templateUrl: 'app.component.html'
   , styleUrls: ['app.component.css']
   , directives: [
-    WechatyComponent
-    , ROUTER_DIRECTIVES
-  ]
-  , providers: [
-    AuthService
+    ROUTER_DIRECTIVES
   ]
 })
 
@@ -53,5 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
   logout() {
     this.log.verbose('App', 'logout()')
     this.authService.logout()
+
+    const link = ['/']
+    this.router.navigate(link)
   }
 }

@@ -1,14 +1,14 @@
 import { provideRouter, RouterConfig } from '@angular/router'
 
-import { AboutRoutes }     from './+about.component/index'
-import { LoginoutRoutes }  from './loginout.component/index'
-import { MessageRoutes }   from './message.component/index'
-import { BotListRoutes }   from './bot-list.component/index'
-import { BotRoutes }       from './bot.component/index'
+import { AboutRoutes }    from './+about.component/index'
+import { LoginRoutes }    from './login.component/index'
+import { MessageRoutes }  from './message.component/index'
+import { BotListRoutes }  from './bot-list.component/index'
+import { BotRoutes }      from './bot.component/index'
 
 const routes: RouterConfig = [
   ... AboutRoutes
-  , ... LoginoutRoutes
+  , ... LoginRoutes
   , ... MessageRoutes
   , ... BotListRoutes
   , ... BotRoutes
