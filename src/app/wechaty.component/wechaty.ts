@@ -77,10 +77,16 @@ export class WechatyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.log.verbose('Wechaty', 'ngOninit() with token: ' + this.token)
 
+    /**
+     * IoServer must be put inside OnInit
+     * because it used @Input(token)
+     * which is not inittialized in constructor()
+     */
     const ioService = this.ioService = new IoService(
       this.token
       , this.injector
     )
+    ioService.start()
 
     this.ioSubscription = ioService.io()
                           .subscribe(this.onIo.bind(this))
@@ -97,8 +103,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ioSubscription.unsubscribe()
       this.ioSubscription = null
     }
-
-    this.log.verbose('Wechaty', 'ngOnDestroy()')
+    this.ioService.stop()
   }
 
   onIo(e: IoEvent) {

@@ -30,7 +30,7 @@ export class BotComponent implements OnInit, OnDestroy {
 
   routeSub: Subscription
 
-  messages: string[]
+  messages: string[] = []
 
   scan: ScanInfo
   user: UserInfo
