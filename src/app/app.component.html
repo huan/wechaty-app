@@ -6,8 +6,8 @@
     <a [routerLink]="['/about']" routerLinkActive="active">About</a>
   </span>
   <span align="end">
-    <a *ngIf="!authService.authed()" [routerLink]="['/login']" routerLinkActive="active">Login</a>
-    <a *ngIf="authService.authed()" (click)="logout()">Logout</a>
+    <a *ngIf="!authService.loggedIn" [routerLink]="['/login']" routerLinkActive="active">Login</a>
+    <a *ngIf="authService.loggedIn" (click)="logout()">Logout</a>
   </span>
 
 </nav>

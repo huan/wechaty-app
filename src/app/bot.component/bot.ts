@@ -15,6 +15,8 @@ import {
 import { Brolog } from 'brolog'
 
 import { WechatyComponent, ScanInfo, UserInfo } from '../wechaty.component/index'
+import { AuthService } from '../auth.service/index'
+import { AuthGuardService } from '../auth-guard.service/index'
 
 @Component({
   moduleId: module.id
@@ -27,19 +29,18 @@ import { WechatyComponent, ScanInfo, UserInfo } from '../wechaty.component/index
 export class BotComponent implements OnInit, OnDestroy {
   id: number
   token: string
-
-  routeSub: Subscription
-
   messages: string[] = []
-
   scan: ScanInfo
   user: UserInfo
-  
   hbCounter = 0
+
+  routeSub: Subscription
+  authSub: Subscription
 
   constructor(
     private route: ActivatedRoute
     , private log: Brolog
+    , private authService: AuthService
   ) {
     log.verbose('Bot', 'constructor()')
   }
@@ -97,5 +98,6 @@ export const BotRoutes: RouterConfig = [
   {
     path: 'bot/:id'
     , component: BotComponent
+    , canActivate: [AuthGuardService]
   }
 ]

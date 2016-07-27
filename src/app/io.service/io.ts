@@ -15,8 +15,8 @@ import { CONFIG } from '../shared/config'
 export type WechatyEventName = 
   'scan'
   | 'login' | 'logout'
-  | 'ding' | 'dong'
   | 'reset' | 'shutdown'
+  | 'ding'  | 'dong'
   | 'heartbeat'
   | 'update'
   | 'error'
@@ -39,7 +39,7 @@ export class IoService {
   private ioSubject: Subject<IoEvent>
   private sendBuffer: string[] = []
 
-  private log    = this.injector.get(Brolog)
+  private log = this.injector.get(Brolog)
 
   private autoReconnect = true
 

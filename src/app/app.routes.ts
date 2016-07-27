@@ -1,5 +1,4 @@
 import { provideRouter, RouterConfig } from '@angular/router'
-import { WechatyComponent } from './wechaty.component'
 
 import { AboutRoutes }     from './+about.component/index'
 import { LoginoutRoutes }  from './loginout.component/index'

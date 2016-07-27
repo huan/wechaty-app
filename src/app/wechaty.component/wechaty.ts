@@ -9,6 +9,7 @@ import {
   , NgZone
   , Injector
 } from '@angular/core'
+
 import {
   Observable
   , Subject
@@ -17,7 +18,6 @@ import {
 
 import { Brolog } from 'brolog'
 
-import { MessageComponent } from '../message.component/index'
 import { IoService, IoEvent } from '../io.service/index'
 
 /**
@@ -41,9 +41,6 @@ export interface UserInfo {
   , selector: 'wechaty'
   , inputs: ['token']
   , templateUrl: 'wechaty.html'
-  , directives: [
-    MessageComponent
-  ]
   , styleUrls: ['wechaty.css']
 })
 
@@ -52,7 +49,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   @Output() scan      = new EventEmitter<ScanInfo>()
   @Output() login     = new EventEmitter<UserInfo>()
   @Output() logout    = new EventEmitter<UserInfo>()
-  @Output() error     = new EventEmitter<Error>()
+  @Output() error     = new EventEmitter<any>()
   @Output() heartbeat = new EventEmitter<any>()
 
   @Input() token: string = ''
@@ -78,7 +75,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
     this.log.verbose('Wechaty', 'ngOninit() with token: ' + this.token)
 
     /**
-     * IoServer must be put inside OnInit
+     * IoService must be put inside OnInit
      * because it used @Input(token)
      * which is not inittialized in constructor()
      */
@@ -103,7 +100,9 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ioSubscription.unsubscribe()
       this.ioSubscription = null
     }
+    
     this.ioService.stop()
+    this.ioService = null
   }
 
   onIo(e: IoEvent) {
@@ -111,19 +110,19 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
     switch(e.name) {
       case 'scan':
-        this.scan.emit(<ScanInfo>e.payload)
+        this.scan.emit(e.payload as ScanInfo)
+        break
+      case 'login':
+        this.login.emit(e.payload as UserInfo)
+        break
+      case 'logout':
+        this.logout.emit(e.payload as UserInfo)
         break
       case 'message':
         this.message.emit(e.payload)
         break
-      case 'login':
-        this.login.emit(<UserInfo>e.payload)
-        break
-      case 'logout':
-        this.logout.emit(<UserInfo>e.payload)
-        break
       case 'error':
-        this.error.emit(new Error(e.payload))
+        this.error.emit(e.payload)
         break
 
       case 'ding':

@@ -1,9 +1,14 @@
 <div>
 
   <h1>{{ title }}</h1>
-  <span> loginout token: {{ 1+1 }} </span>
 
-  <form #form="ngForm" (ngSubmit)="login(form.value)">
+  <p>Wechaty is in Alpha stage.</p>
+  <p>Use your WECHATY_TOKEN as Username.</p>
+
+  <form 
+    #loginForm="ngForm" 
+    (ngSubmit)="login(loginForm)"
+  >
     <label for="username">Username or Email:</label>
     <input type="text"
       name="username"
@@ -23,11 +28,15 @@
       name="remember"
       ngModel
     >
-
-    <button type="submit"
-    >Sign In</button>
-
+    
     &nbsp;<a href="/login/forgot">Forgot your password?</a>
+
+    <button 
+      type="submit"
+      [disabled]="!loginForm.valid"
+    >
+      Sign In
+    </button>
 
   </form>
 

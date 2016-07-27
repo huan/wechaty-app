@@ -39,11 +39,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.log.verbose('App', 'ngOnInit()')
 
-    let link = ['/login']
-    if (this.authService.authed()) {
-      link = ['/bot', "1"]
-    }
-    this.router.navigate(link)
+    // let link = ['/login']
+    // if (this.authService.authed()) {
+    //   link = ['/bot', "1"]
+    // }
+    // this.router.navigate(link)
   }
 
   ngOnDestroy() {

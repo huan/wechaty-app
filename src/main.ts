@@ -7,6 +7,7 @@ import { Brolog } from 'brolog'
 
 import { AppComponent, environment, APP_ROUTER_PROVIDERS }  from './app'
 import { AuthService } from './app/auth.service/index'
+import { AuthGuardService } from './app/auth-guard.service/index'
 
 if (environment.production) {
   enableProdMode()
@@ -16,6 +17,7 @@ bootstrap(AppComponent, [
   HTTP_PROVIDERS
   , APP_ROUTER_PROVIDERS
   , AuthService
+  , AuthGuardService
   , Brolog('silly')
   , disableDeprecatedForms()
   , provideForms()

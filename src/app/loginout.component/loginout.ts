@@ -3,8 +3,19 @@ import {
   , OnInit
   , OnDestroy
 } from '@angular/core'
-import { Router, ActivatedRoute, RouterConfig } from '@angular/router'
-import { Validators }   from '@angular/forms'
+
+import { 
+  Router
+  , ActivatedRoute
+  , RouterConfig 
+} from '@angular/router'
+
+import {   
+  NgForm
+  , Validators 
+} from '@angular/forms'
+
+import { Brolog } from 'brolog'
 
 import { AuthService } from '../auth.service/index'
 
@@ -16,65 +27,65 @@ import { AuthService } from '../auth.service/index'
 })
 
 export class LoginoutComponent implements OnInit, OnDestroy {
-  title = 'Loginout Component Title'
-  sub: any
+  title = 'Wechaty Login'
+  // sub: any
 
   constructor(
     private authService: AuthService
     , private router: Router
     , private route: ActivatedRoute
+    , private log: Brolog
   ) {
-    console.log('loginout constructor')
+    log.verbose('LoginoutComponent', 'constructor()')
   }
 
   ngOnInit() {
-    // this.sub = this.route.params.subscribe(params => {
-    //   console.log('loginout onInit params: ')
-    //   console.log(params)
-    // })
-    // this.sub = this.route.url.subscribe(url => {
-    //   console.log(url[0].path)
-    // })
-    console.log('loginout oninit')
-
-    const link = ['/bot', '1']
-    this.router.navigate(link)
-
+    this.log.verbose('LoginoutComponent', 'ngOnInit()')
   }
 
   ngOnDestroy() {
-    if (this.sub) {
-      this.sub.unsubscribe()
-    }
-    console.log('loginout ondestroy')
+    this.log.verbose('LoginoutComponent', 'ngDestroy()')
   }
 
-  login({
-    username
-    , password
-    , remember
-  }) {
+  /**
+   * NgForm Guide: http://blog.thoughtram.io/angular/2016/03/21/template-driven-forms-in-angular-2.html
+   */
+  login(form: NgForm): void {
+    this.log.verbose('LoginoutComponent', 'login()')
 
-    let succ = this.authService.auth(username, password)
+    const {
+      username
+      , password
+      , remember
+    } = form.value
 
-    console.log('login('
-      + username
-      + ', '
-      + password
-      + ') : '
-      + succ
-     )
-
-    if (succ) {
-      console.log('succ, redirect to bot/1')
-      const link = ['/bot', '1']
-      this.router.navigate(link)
-    }
-
-    return succ
+    this.authService.login(username, password)
+        .subscribe(
+          _ => {
+            let link = ['/bot', '1']
+            if (this.authService.redirectUrl) {
+                link = [this.authService.redirectUrl]
+            }
+            this.router.navigate(link)
+            this.log.verbose('LoginoutComponent', 'login() succ, redirecting to %s', link[0])
+          }
+          , e => {
+            this.log.verbose('LoginoutComponent', 'login() fail: %s', e.message || e)
+          }
+          , () => {
+            this.log.verbose('LoginoutComponent', 'login() user/pass[%s/%s] remember[%s]: loggedIn:%s'
+                                                , username
+                                                , password
+                                                , remember
+                                                , this.authService.loggedIn 
+                            )
+          }
+        )
   }
 
   logout() {
+    this.log.verbose('LoginoutComponent', 'logout()')
+
     const link = ['/']
     this.router.navigate(link)
   }
