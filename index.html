@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>Wechaty APP - Your cloud chatbot manager</title>
+  <base href="/wechaty-app/">
+
+  <script>
+    // See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
+    // http://developer.telerik.com/featured/quick-angular-2-hosting-angular-cli-github-pages/
+    (function(){
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != window.location.href) {
+        window.history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+<body>
+  <app-root>
+    <div align="center">
+      <img
+        src="/app/asset/image/wechaty-icon.png"
+        alt="Wechaty"
+      >
+      <div>Wechaty Loading...</div>
+    </div>
+  </app-root>
+
+
+
+    <script src="vendor/es6-shim/es6-shim.js"></script>
+    <script src="vendor/reflect-metadata/Reflect.js"></script>
+    <script src="vendor/systemjs/dist/system.src.js"></script>
+    <script src="vendor/zone.js/dist/zone.js"></script>
+    <script>
+      System.import('system-config.js').then(function () {
+        System.import('main');
+      }).catch(console.error.bind(console));
+    </script>
+
+
+
+</body>
+</html>
