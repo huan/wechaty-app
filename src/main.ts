@@ -1,7 +1,8 @@
 import { bootstrap }      from '@angular/platform-browser-dynamic'
-import { enableProdMode } from '@angular/core'
+import { provide, enableProdMode } from '@angular/core'
 import { HTTP_PROVIDERS } from '@angular/http'
 import { disableDeprecatedForms, provideForms } from '@angular/forms'
+import { APP_BASE_HREF } from '@angular/common'
 
 import { Brolog } from 'brolog'
 
@@ -16,6 +17,7 @@ if (environment.production) {
 bootstrap(AppComponent, [
   HTTP_PROVIDERS
   , APP_ROUTER_PROVIDERS
+  , provide(APP_BASE_HREF, {useValue : '/' })
   , AuthService
   , AuthGuardService
   , Brolog('silly')
