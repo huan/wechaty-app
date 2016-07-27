@@ -13,7 +13,11 @@ const routes: RouterConfig = [
   , ... BotListRoutes
   , ... BotRoutes
 
-  , { path: '', redirectTo: '/about' }
+  , { 
+    path: ''
+    , pathMatch: 'full'
+    , redirectTo: '/about' 
+  }
 ]
 
 export const APP_ROUTER_PROVIDERS = [
