@@ -103,8 +103,7 @@ export class IoService {
     this.log.verbose('IoService', 'initWebSocket()')
 
     if (this.websocket) {
-      this.log.verbose('IoService', 'initWebSocket() there already has a websocket. return for do nothing')
-      return
+      this.log.warn('IoService', 'initWebSocket() there already has a websocket. will go ahead and overwrite it')
     }
 
     this.websocket = new WebSocket(this.endPoint(), this.wsProtocol)
