@@ -13,6 +13,9 @@
       delete sessionStorage.redirect;
       if (redirect && redirect != window.location.href) {
         window.history.replaceState(null, null, redirect)
+        console.log('404 redirected')
+      } else {
+        console.log('no 404 redir')
       }
     })()
   </script>
@@ -22,8 +25,8 @@
   {{/unless}}
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/style.css">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 </head>
 <body>
@@ -42,11 +45,11 @@
 
 
     {{#each scripts.polyfills}}
-    <script src="/{{.}}"></script>
+    <script src="{{.}}"></script>
     {{/each}}
     <script>
-      System.import('/system-config.js').then(function () {
-        System.import('/main');
+      System.import('system-config.js').then(function () {
+        System.import('main');
       }).catch(console.error.bind(console));
     </script>
 
