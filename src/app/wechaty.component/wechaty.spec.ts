@@ -5,18 +5,22 @@ import {
   async, inject
 } from '@angular/core/testing'
 
+import { Brolog } from 'brolog'
+
 import { WechatyComponent } from './wechaty'
 
-beforeEachProviders(() => [WechatyComponent])
+beforeEachProviders(() => [WechatyComponent, Brolog])
 
 describe('WechatyComponent Test', () => {
-  it('should create the app',
-      inject([WechatyComponent], (wechaty: WechatyComponent) => {
-    expect(wechaty).toBeTruthy()
-  }))
+  it('should create the app'
+    , inject([WechatyComponent], (wechaty: WechatyComponent) => {
+      expect(wechaty).toBeTruthy()
+    })
+  )
 
   it('should have as content "app works!"',
-      inject([WechatyComponent], (wechaty: WechatyComponent) => {
-    expect(wechaty.token).toEqual('')
-  }))
+    inject([WechatyComponent], (wechaty: WechatyComponent) => {
+      expect(wechaty.token).toEqual('')
+    })
+  )
 })
