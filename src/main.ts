@@ -17,7 +17,7 @@ if (environment.production) {
 bootstrap(AppComponent, [
   HTTP_PROVIDERS
   , APP_ROUTER_PROVIDERS
-  , provide(APP_BASE_HREF, {useValue : '/' })
+  // , provide(APP_BASE_HREF, {useValue : '/' })
   , AuthService
   , AuthGuardService
   , Brolog('silly')
