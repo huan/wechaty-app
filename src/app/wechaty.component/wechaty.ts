@@ -1,6 +1,5 @@
 import {
   Component
-  , Inject
   , OnInit
   , OnDestroy
   , EventEmitter
@@ -100,7 +99,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ioSubscription.unsubscribe()
       this.ioSubscription = null
     }
-    
+
     this.ioService.stop()
     this.ioService = null
   }
@@ -108,7 +107,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   onIo(e: IoEvent) {
     this.log.silly('Wechaty', 'onIo#%d(%s)', this.counter++, e.name)
 
-    switch(e.name) {
+    switch (e.name) {
       case 'scan':
         this.scan.emit(e.payload as ScanInfo)
         break

@@ -1,7 +1,7 @@
-import { 
+import {
   Component
   , OnInit
-  , OnDestroy 
+  , OnDestroy
 } from '@angular/core'
 import { RouterConfig } from '@angular/router'
 
@@ -34,7 +34,7 @@ export class BotieComponent implements OnInit, OnDestroy {
 
 }
 
-export const BotieRoutes: RouterConfig = [
+export const BOTIE_ROUTES: RouterConfig = [
   {
     path: 'botie',
     component: BotieComponent

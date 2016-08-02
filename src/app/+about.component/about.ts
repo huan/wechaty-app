@@ -12,7 +12,7 @@ import { RouterConfig } from '@angular/router'
 })
 export class AboutComponent {}
 
-export const AboutRoutes: RouterConfig = [
+export const ABOUT_ROUTES: RouterConfig = [
   {
     path: 'about',
     component: AboutComponent

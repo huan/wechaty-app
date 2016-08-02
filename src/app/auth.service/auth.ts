@@ -1,6 +1,5 @@
 import {
   Injectable
-  , Inject
 } from '@angular/core'
 
 import { Observable } from 'rxjs/Observable'
@@ -23,7 +22,7 @@ export class AuthService {
     this.log.verbose('AuthService', 'constructor()')
 
     // TODO: https://toddmotto.com/angular-2-authentication
-    
+
     this.token = localStorage.getItem('token')
   }
 

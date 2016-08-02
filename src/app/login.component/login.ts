@@ -4,15 +4,15 @@ import {
   , OnDestroy
 } from '@angular/core'
 
-import { 
+import {
   Router
   , ActivatedRoute
-  , RouterConfig 
+  , RouterConfig
 } from '@angular/router'
 
-import {   
+import {
   NgForm
-  , Validators 
+  // , Validators
 } from '@angular/forms'
 
 import { Brolog } from 'brolog'
@@ -48,7 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * NgForm Guide: http://blog.thoughtram.io/angular/2016/03/21/template-driven-forms-in-angular-2.html
+   * NgForm Guide:
+   * http://blog.thoughtram.io/angular/2016/03/21/template-driven-forms-in-angular-2.html
    */
   login(form: NgForm): void {
     this.log.verbose('LoginoutComponent', 'login()')
@@ -73,18 +74,19 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.log.verbose('LoginoutComponent', 'login() fail: %s', e.message || e)
           }
           , () => {
-            this.log.verbose('LoginoutComponent', 'login() user/pass[%s/%s] remember[%s]: loggedIn:%s'
-                                                , username
-                                                , password
-                                                , remember
-                                                , this.authService.loggedIn 
+            this.log.verbose('LoginoutComponent'
+                              , 'login() user/pass[%s/%s] remember[%s]: loggedIn:%s'
+                              , username
+                              , password
+                              , remember
+                              , this.authService.loggedIn
                             )
           }
         )
   }
 }
 
-export const LoginRoutes: RouterConfig = [
+export const LOGIN_ROUTES: RouterConfig = [
   {
     path: 'login',
     component: LoginComponent

@@ -1,25 +1,22 @@
-import { NgTestPage } from './app.po'
+import { WechatyAppPage } from './app.po'
 
 describe('Wechaty App', function() {
-  let page: NgTestPage
+  let page: WechatyAppPage
 
   beforeEach(() => {
-    page = new NgTestPage()
+    page = new WechatyAppPage()
   })
 
-  it('should display message saying !$#$ app works', () => {
+  it('should display message saying "Wechaty APP"', () => {
     page.navigateTo()
     // const t = page.getParagraphText()
     // t.then(t => console.log(t))
-    const t = browser.getTitle()
-    t.then(title => console.log(title))
-    expect(t).toEqual('Wechaty APP')
+    expect(page.title()).toEqual('Wechaty APP - Your cloud chatbot manager')
 
-
-    // expect(element(by.css('.zixia')).getText()).toEqual('Hello Wechaty')
+    expect(element(by.css('h1')).getText()).toEqual('Wechaty APP Dashboard')
 
     expect(1).toEqual(1)
-    expect(browser.getTitle()).toEqual('Wechaty APP')
+    expect(browser.getTitle()).toEqual('Wechaty APP - Your cloud chatbot manager')
 
   })
 })

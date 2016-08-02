@@ -12,7 +12,7 @@ import { Brolog } from 'brolog'
 
 import { CONFIG } from '../shared/config'
 
-export type WechatyEventName = 
+export type WechatyEventName =
   'scan'
   | 'login' | 'logout'
   | 'reset' | 'shutdown'
@@ -21,12 +21,12 @@ export type WechatyEventName =
   | 'update'
   | 'error'
 
-export type ServerEventName = 
+export type ServerEventName =
   'sys'
 
 export type IoEventName = 'raw' | WechatyEventName | ServerEventName
 
-export interface IoEvent { 
+export interface IoEvent {
   name: IoEventName
   payload: any
 }
@@ -103,7 +103,7 @@ export class IoService {
     this.log.verbose('IoService', 'initWebSocket()')
 
     if (this.websocket) {
-      this.log.warn('IoService', 'initWebSocket() there already has a websocket. will go ahead and overwrite it')
+      this.log.warn('IoService', 'initWebSocket() there already has a websocket')
     }
 
     this.websocket = new WebSocket(this.endPoint(), this.wsProtocol)
@@ -153,8 +153,9 @@ export class IoService {
     if (this.alive()) {
       // 1. check buffer for send old ones
       while (this.sendBuffer.length) {
-        this.log.verbose('IoService', 'wsSend() buffer processing: length: %d', this.sendBuffer.length)
-
+        this.log.verbose('IoService', 'wsSend() buffer processing: length: %d'
+                                    , this.sendBuffer.length
+                        )
         let m = this.sendBuffer.shift()
         this.websocket.send(m)
       }
@@ -163,7 +164,10 @@ export class IoService {
 
     } else { // 3. buffer this message for future retry
       this.sendBuffer.push(message)
-      this.log.verbose('IoService', 'wsSend() without WebSocket.OPEN, buf len: %d', this.sendBuffer.length)
+      this.log.verbose('IoService'
+                        , 'wsSend() without WebSocket.OPEN, buf len: %d'
+                        , this.sendBuffer.length
+                      )
     }
   }
 
@@ -192,7 +196,7 @@ function onClose(e) {
       this.initWebSocket()
     }, 1000)
   }
-  
+
   if (!e.wasClean) {
     // console.warn('IoService.onClose: e.wasClean FALSE')
   }
@@ -208,8 +212,7 @@ function onError(e) {
  * this: Subscriber
  *
  */
-function onMessage(message)
-{
+function onMessage(message) {
   const data = message.data // WebSocket data
   this.log.verbose('IoService', 'onMessage(%s)', data)
 

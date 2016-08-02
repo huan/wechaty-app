@@ -9,7 +9,7 @@ import { RouterConfig } from '@angular/router'
 })
 export class BotListComponent {}
 
-export const BotListRoutes: RouterConfig = [
+export const BOT_LIST_ROUTES: RouterConfig = [
   {
     path: 'bot-list',
     component: BotListComponent

@@ -1,6 +1,5 @@
 import {
   Component
-  , Inject
   , OnInit
   , OnDestroy
 } from '@angular/core'
@@ -22,7 +21,7 @@ import { AuthService }       from './auth.service/index'
 })
 
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'Wechaty APP -  Cloud Manager for your Boties'
+  title = 'Wechaty APP Dashboard'
 
   constructor(
     private authService: AuthService

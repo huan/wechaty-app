@@ -2,7 +2,6 @@ import {
   Component
   , OnInit
   , OnDestroy
-  , Inject
  } from '@angular/core'
 
 import {
@@ -19,7 +18,7 @@ import { Brolog } from 'brolog'
 import {
   WechatyComponent
   , ScanInfo
-  , UserInfo 
+  , UserInfo
 } from '../wechaty.component/index'
 
 import { AuthService } from '../auth.service/index'
@@ -98,11 +97,11 @@ export class BotComponent implements OnInit, OnDestroy {
   shutdown(wechaty: WechatyComponent) {
     this.log.verbose('Bot', 'shutdown()')
     this.scan = this.user = null
-    wechaty.shutdown('by web bot component')    
+    wechaty.shutdown('by web bot component')
   }
 }
 
-export const BotRoutes: RouterConfig = [
+export const BOT_ROUTES: RouterConfig = [
   {
     path: 'bot/:id'
     , component: BotComponent
