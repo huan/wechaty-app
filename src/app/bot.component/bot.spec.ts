@@ -7,7 +7,7 @@ import {
   inject,
   it
 } from '@angular/core/testing'
-import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter'
+// import { getDOM } from '@angular/platform-browser/src/dom/dom_adapter'
 
 import { Brolog } from 'brolog'
 
@@ -25,9 +25,8 @@ export function main() {
         tcb.overrideProviders(TestComponent, providerArr)
           .createAsync(TestComponent)
           .then((rootTC: any) => {
-            let botDOMEl = rootTC.debugElement.children[0].nativeElement
-
-      	    // expect(getDOM().querySelectorAll(botDOMEl, 'h2')[0].textContent).toEqual('Features')
+            // let botDOMEl = rootTC.debugElement.children[0].nativeElement
+            // expect(getDOM().querySelectorAll(botDOMEl, 'h2')[0].textContent).toEqual('Features')
             expect(1).toEqual(1)
           })
         }))

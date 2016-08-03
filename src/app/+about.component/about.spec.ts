@@ -23,16 +23,16 @@ export function main() {
         tcb.overrideProviders(TestComponent, providerArr)
           .createAsync(TestComponent)
           .then((rootTC: any) => {
-            let aboutDOMEl = rootTC.debugElement.children[0].nativeElement;
-	          expect(getDOM().querySelectorAll(aboutDOMEl, 'h2')[0].textContent).toEqual('Features')
-          });
-        }));
-    });
+            let aboutDOMEl = rootTC.debugElement.children[0].nativeElement
+            expect(getDOM().querySelectorAll(aboutDOMEl, 'h2')[0].textContent).toEqual('Features')
+          })
+        }))
+    })
 }
 
 @Component({
-  selector: 'test-cmp',
-  directives: [AboutComponent],
-  template: '<sd-about></sd-about>'
+  selector: 'test-cmp'
+  , directives: [AboutComponent]
+  , template: '<sd-about></sd-about>'
 })
 class TestComponent {}

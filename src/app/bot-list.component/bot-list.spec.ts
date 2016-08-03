@@ -23,17 +23,16 @@ export function main() {
         tcb.overrideProviders(TestComponent, providerArr)
           .createAsync(TestComponent)
           .then((rootTC: any) => {
-            let botListDOMEl = rootTC.debugElement.children[0].nativeElement;
-
-	    expect(getDOM().querySelectorAll(botListDOMEl, 'h2')[0].textContent).toEqual('Features');
-          });
-        }));
-    });
+            let botListDOMEl = rootTC.debugElement.children[0].nativeElement
+            expect(getDOM().querySelectorAll(botListDOMEl, 'h2')[0].textContent).toEqual('Features')
+          })
+        }))
+    })
 }
 
 @Component({
-  selector: 'test-cmp',
-  directives: [BotListComponent],
-  template: '<bot-list></bot-list>'
+  selector: 'test-cmp'
+  , directives: [BotListComponent]
+  , template: '<bot-list></bot-list>'
 })
 class TestComponent {}

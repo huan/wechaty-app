@@ -10,7 +10,7 @@
     "stop": "ps ax | grep angular-cli | grep -v grep && killall angular-cli || echo 'no angular-cli need kill'",
     "postinstall": "typings install",
     "lint": "tslint src/**/*.ts",
-    "test": "npm run unit && npm run e2e",
+    "test": "npm run lint && npm run unit && npm run e2e",
     "unit": "ng test --watch=false",
     "pree2e": "npm start && webdriver-manager update",
     "e2e": "protractor config/protractor.conf.js",

@@ -1,8 +1,8 @@
 import {
-  beforeEach, beforeEachProviders,
-  describe, xdescribe,
-  expect, it, xit,
-  async, inject
+  beforeEachProviders
+  , describe
+  , expect, it
+  , inject
 } from '@angular/core/testing'
 
 import { Brolog } from 'brolog'
