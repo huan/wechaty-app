@@ -67,7 +67,7 @@
     "karma-chrome-launcher": "2.0.0",
     "karma-jasmine": "1.1.0",
     "node-sass": "^4.0.0",
-    "protractor": "4.0.13",
+    "protractor": "4.0.14",
     "sinon": "^2.0.0-pre.2",
     "ts-node": "^1.2.1",
     "tslint": "4.1.1",
