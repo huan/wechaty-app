@@ -70,7 +70,7 @@
     "protractor": "4.0.13",
     "sinon": "^2.0.0-pre.2",
     "ts-node": "^1.2.1",
-    "tslint": "4.1.1",
+    "tslint": "4.2.0",
     "typescript": "^2",
     "typings": "2.0.0"
   },
