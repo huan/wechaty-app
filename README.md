@@ -22,6 +22,9 @@ Wechaty APP Web Component
 
 1. [WebPack Tutorial](http://webpack.github.io/docs/tutorials/getting-started/)
 
+## Documentation
+
+* [Compodoc - The missing documentation tool for your Angular application](https://compodoc.github.io/compodoc/)
 
 ## Testing
 
