@@ -52,7 +52,7 @@
     "@angular/router": "3.3.0",
     "brolog": "latest",
     "es6-shim": "0.35.2",
-    "reflect-metadata": "0.1.8",
+    "reflect-metadata": "0.1.10",
     "rxjs": "5.0.0",
     "systemjs": "0.19.41",
     "zone.js": "0.7.2"
