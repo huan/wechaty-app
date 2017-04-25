@@ -103,4 +103,4 @@ $ sudo ln -sf /bin/bash /bin/sh
 
 * [Upgrading from Beta.10 to Beta.14](https://github.com/angular/angular-cli/wiki/Upgrading-from-Beta.10-to-Beta.14)
 * [stories 1.0 update](https://github.com/angular/angular-cli/wiki/stories-1.0-update)
-
+* [Angular 4.0.0 Now Available](https://angularjs.blogspot.com/2017/03/angular-400-now-available.html)
