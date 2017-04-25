@@ -98,3 +98,9 @@ Notice: if you use cloud9, you need to change the default shell from `dash` to `
 ```shell
 $ sudo ln -sf /bin/bash /bin/sh
 ```
+
+# Upgrade to Angular 4
+
+* [Upgrading from Beta.10 to Beta.14](https://github.com/angular/angular-cli/wiki/Upgrading-from-Beta.10-to-Beta.14)
+* [stories 1.0 update](https://github.com/angular/angular-cli/wiki/stories-1.0-update)
+
