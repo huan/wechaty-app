@@ -1,42 +1,46 @@
-/* tslint:disable:no-unused-variable */
+import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import {
-  beforeEach, beforeEachProviders,
-  describe, xdescribe,
-  expect, it, xit,
-  async, inject
-} from '@angular/core/testing'
+import { Brolog }       from 'brolog'
 
-import { provide } from '@angular/core'
+import { AuthService }  from './auth.service'
+import { AppComponent } from './app.component';
 
-// https://gist.github.com/JohannesHoppe/c7715b947ef121cd58c9ffd4d4290fd5
-/**
- * https://github.com/angular/angular/issues/9496#issuecomment-231194826
- * http://sinonjs.org/docs/
- */
-import { Router, ActivatedRoute } from '@angular/router';
-class MockRouter { createUrlTree() {} }
-class MockActivatedRoute { }
+describe('AppComponent', () => {
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+      ],
+      declarations: [
+        AppComponent
+      ],
+      providers: [
+        AuthService,
+        {
+          provide: Brolog,
+          useFactory() { return Brolog.instance('silly') },
+        },
+      ],
+    }).compileComponents();
+  }));
 
-import { AuthService } from './auth.service/index'
-import { AppComponent } from './app.component'
+  it('should create the app', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+  }));
 
-beforeEachProviders(() => [
-  AppComponent
-  , AuthService
-  // , Router
-  , provide(Router, { useClass: MockRouter })
-  , provide(ActivatedRoute, { useClass: MockActivatedRoute })
-])
+  it(`should have as title 'Wechaty'`, async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app.title).toContain('Wechaty');
+  }));
 
-describe('App: NgTest', () => {
-  it('should create the app'
-      , inject([AppComponent], (app: AppComponent) => {
-    expect(app).toBeTruthy()
-  }))
-
-  it('should have as title "Hello Wechaty"'
-      , inject([AppComponent], (app: AppComponent) => {
-    expect(app.title).toContain('Wechaty')
-  }))
-})
+  it('should render title in a h1 tag', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('h1').textContent).toContain('Wechaty');
+  }));
+});

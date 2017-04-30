@@ -1,22 +1,14 @@
-import { WechatyAppPage } from './app.po'
+import { Angular4Page } from './app.po';
 
-describe('Wechaty App', function() {
-  let page: WechatyAppPage
+describe('angular4 App', () => {
+  let page: Angular4Page;
 
   beforeEach(() => {
-    page = new WechatyAppPage()
-  })
+    page = new Angular4Page();
+  });
 
-  it('should display message saying "Wechaty APP"', () => {
-    page.navigateTo()
-    // const t = page.getParagraphText()
-    // t.then(t => console.log(t))
-    expect(page.title()).toEqual('Wechaty APP - Your cloud chatbot manager')
-
-    expect(element(by.css('h1')).getText()).toEqual('Wechaty APP Dashboard')
-
-    expect(1).toEqual(1)
-    expect(browser.getTitle()).toEqual('Wechaty APP - Your cloud chatbot manager')
-
-  })
-})
+  it('should display message saying Wechaty', () => {
+    page.navigateTo();
+    expect(page.getParagraphText()).toContain('Wechaty');
+  });
+});

@@ -1,13 +1,11 @@
-export class WechatyAppPage {
+import { browser, element, by } from 'protractor';
+
+export class Angular4Page {
   navigateTo() {
-    return browser.get('/')
+    return browser.get('/');
   }
 
   getParagraphText() {
-    return element(by.css('app-root')).getText()
-  }
-
-  title() {
-    return browser.getTitle()
+    return element(by.css('app-root h1')).getText();
   }
 }

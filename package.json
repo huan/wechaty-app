@@ -1,10 +1,17 @@
 {
   "name": "wechaty-app",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Wechaty APP",
-  "angular-cli": {},
-  "main": "index.js",
+  "license": "MIT",
   "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "oldScripts": {
     "start": "npm run start:fg &",
     "start:fg": "ng serve --live-reload-port=8081",
     "stop": "ps ax | grep angular-cli | grep -v grep && killall angular-cli || echo 'no angular-cli need kill'",
@@ -19,6 +26,40 @@
     "deploy": "ng github-pages:deploy --message 'Deploy by NPM'",
     "Xprepublish": "npm run build && npm test"
   },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
+    "brolog": "^1.0.13",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@angular/cli": "1.0.1",
+    "@angular/compiler-cli": "^4.0.0",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "~6.0.60",
+    "codelyzer": "~2.0.0",
+    "jasmine-core": "~2.5.2",
+    "jasmine-spec-reporter": "~3.2.0",
+    "karma": "~1.4.1",
+    "karma-chrome-launcher": "~2.0.0",
+    "karma-cli": "~1.0.1",
+    "karma-jasmine": "~1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
+    "protractor": "~5.1.0",
+    "ts-node": "~2.0.0",
+    "tslint": "~4.5.0",
+    "typescript": "~2.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zixia/wechaty-app.git"
@@ -32,51 +73,9 @@
     "zixia",
     "web component"
   ],
-  "author": "Zhuohuan LI <zixia@zixia.net>",
-  "license": "MIT",
+  "author": "Huan LI <zixia@zixia.net>",
   "bugs": {
     "url": "https://github.com/zixia/wechaty-app/issues"
   },
-  "homepage": "https://github.com/zixia/wechaty-app#readme",
-  "engines": {
-    "node": ">= 5.0.0"
-  },
-  "dependencies": {
-    "@angular/common": "2.3.1",
-    "@angular/compiler": "2.3.1",
-    "@angular/core": "2.3.0",
-    "@angular/forms": "2.3.1",
-    "@angular/http": "2.3.0",
-    "@angular/platform-browser": "2.3.0",
-    "@angular/platform-browser-dynamic": "2.3.0",
-    "@angular/router": "3.3.0",
-    "brolog": "latest",
-    "es6-shim": "0.35.2",
-    "reflect-metadata": "0.1.8",
-    "rxjs": "5.0.0",
-    "systemjs": "0.19.41",
-    "zone.js": "0.7.2"
-  },
-  "devDependencies": {
-    "angular-cli": "1.0.0-beta.22-1",
-    "codelyzer": "2.0.0-beta.2",
-    "ember-cli-inject-live-reload": "1.4.1",
-    "jasmine-core": "2.5.2",
-    "jasmine-spec-reporter": "3.1.0",
-    "karma": "1.3.0",
-    "karma-chrome-launcher": "2.0.0",
-    "karma-jasmine": "1.1.0",
-    "node-sass": "^4.0.0",
-    "protractor": "4.0.13",
-    "sinon": "^2.0.0-pre.2",
-    "ts-node": "^2.0.0",
-    "tslint": "4.1.1",
-    "typescript": "^2",
-    "typings": "2.0.0"
-  },
-  "typings": "./component.d.ts",
-  "typescript": {
-    "main": "src/app/index.ts",
-    "definition": "src/app/index.d.ts"
-  }
+  "homepage": "https://github.com/zixia/wechaty-app#readme"
 }

@@ -4,20 +4,17 @@ import {
   , OnDestroy
 } from '@angular/core'
 
-import { ROUTER_DIRECTIVES, Router } from '@angular/router'
+import { Router }       from '@angular/router'
 
-import { Brolog } from 'brolog'
+import { Brolog }       from 'brolog'
 
-import { AuthService }       from './auth.service/index'
+import { AuthService }  from './auth.service'
 
 @Component({
-  moduleId: module.id
-  , selector: 'app-root'
-  , templateUrl: 'app.component.html'
-  , styleUrls: ['app.component.css']
-  , directives: [
-    ROUTER_DIRECTIVES
-  ]
+  // moduleId: module.id,
+  selector:     'app-root',
+  templateUrl:  'app.component.html',
+  styleUrls:    ['app.component.css'],
 })
 
 export class AppComponent implements OnInit, OnDestroy {

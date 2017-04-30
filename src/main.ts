@@ -1,26 +1,11 @@
-import { bootstrap }      from '@angular/platform-browser-dynamic'
-import { enableProdMode } from '@angular/core'
-import { HTTP_PROVIDERS } from '@angular/http'
-import { disableDeprecatedForms, provideForms } from '@angular/forms'
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { Brolog } from 'brolog'
-
-import { AppComponent, environment, APP_ROUTER_PROVIDERS }  from './app'
-import { AuthService } from './app/auth.service/index'
-import { AuthGuardService } from './app/auth-guard.service/index'
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
 
 if (environment.production) {
-  enableProdMode()
+  enableProdMode();
 }
 
-bootstrap(AppComponent, [
-  HTTP_PROVIDERS
-  , APP_ROUTER_PROVIDERS
-  // , provide(APP_BASE_HREF, {useValue : '/' })
-  , AuthService
-  , AuthGuardService
-  , Brolog('silly')
-  , disableDeprecatedForms()
-  , provideForms()
-])
-.catch(err => console.error(err))
+platformBrowserDynamic().bootstrapModule(AppModule);

@@ -17,7 +17,7 @@ import {
 
 import { Brolog } from 'brolog'
 
-import { IoService, IoEvent } from '../io.service/index'
+import { IoService, IoEvent } from '../io.service'
 
 /**
  * for payload
@@ -36,13 +36,12 @@ export interface UserInfo {
 }
 
 @Component({
-  moduleId: module.id
-  , selector: 'wechaty'
-  , inputs: ['token']
-  , templateUrl: 'wechaty.html'
-  , styleUrls: ['wechaty.css']
+  // tslint:disable-next-line:component-selector
+  selector: 'wechaty',
+  // moduleId: module.id,
+  styleUrls: ['./wechaty.component.css'],
+  templateUrl: './wechaty.component.html',
 })
-
 export class WechatyComponent implements OnInit, OnDestroy {
   @Output() message   = new EventEmitter<string>()
   @Output() scan      = new EventEmitter<ScanInfo>()
@@ -51,7 +50,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
   @Output() error     = new EventEmitter<any>()
   @Output() heartbeat = new EventEmitter<any>()
 
-  @Input() token: string = ''
+  @Input() token = ''
 
   private timer: Observable<any>
   private timerSub: Subscription
@@ -63,9 +62,9 @@ export class WechatyComponent implements OnInit, OnDestroy {
   counter = 0
 
   constructor(
-    private ngZone: NgZone
-    , private log: Brolog
-    , private injector: Injector
+    private ngZone: NgZone,
+    private log: Brolog,
+    private injector: Injector,
   ) {
     this.log.verbose('Wechaty', 'constructor()')
   }
@@ -79,8 +78,8 @@ export class WechatyComponent implements OnInit, OnDestroy {
      * which is not inittialized in constructor()
      */
     const ioService = this.ioService = new IoService(
-      this.token
-      , this.injector
+      this.injector,
+      this.token,
     )
     ioService.start()
 

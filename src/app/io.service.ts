@@ -1,3 +1,7 @@
+// Io Service should be instanciated each time. (one io service for one wechaty component)
+// import { Injectable } from '@angular/core';
+// @Injectable()
+
 import {
   Injector
 } from '@angular/core'
@@ -10,13 +14,14 @@ import {
 
 import { Brolog } from 'brolog'
 
-import { CONFIG } from '../shared/config'
+import { ConfigService } from './config.service'
 
 export type WechatyEventName =
   'scan'
   | 'login' | 'logout'
   | 'reset' | 'shutdown'
   | 'ding'  | 'dong'
+  | 'message'
   | 'heartbeat'
   | 'update'
   | 'error'
@@ -39,13 +44,14 @@ export class IoService {
   private ioSubject: Subject<IoEvent>
   private sendBuffer: string[] = []
 
-  private log = this.injector.get(Brolog)
+  private config  = this.injector.get(ConfigService)
+  private log     = this.injector.get(Brolog)
 
   private autoReconnect = true
 
   constructor(
-    private token: string
-    , private injector: Injector
+    private injector: Injector,
+    private token:    string,
    ) {
     this.log.verbose('IoService', 'constructor(%s)', token)
     // console.log(injector)
@@ -121,7 +127,10 @@ export class IoService {
   }
 
   endPoint(): string {
-    return CONFIG.ioEndPoint + this.token
+    const url = this.config.ioEndPoint + this.token
+    this.log.verbose('IoService', 'endPoint() => %s', url)
+    this.log.verbose('IoService', 'endPoint() config => %s', JSON.stringify(this.config))
+    return url
   }
 
   alive() {
@@ -156,7 +165,7 @@ export class IoService {
         this.log.verbose('IoService', 'wsSend() buffer processing: length: %d'
                                     , this.sendBuffer.length
                         )
-        let m = this.sendBuffer.shift()
+        const m = this.sendBuffer.shift()
         this.websocket.send(m)
       }
       // 2. send this one
@@ -216,7 +225,7 @@ function onMessage(message) {
   const data = message.data // WebSocket data
   this.log.verbose('IoService', 'onMessage(%s)', data)
 
-  let ioEvent: IoEvent = {
+  const ioEvent: IoEvent = {
     name: 'raw'
     , payload: data
   } // this is default io event for unknown format message
