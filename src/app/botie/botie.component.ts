@@ -51,9 +51,17 @@ export class BotieComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.log.verbose('Botie', 'ngOnInit()')
-    this.routeSub = this.route.params.subscribe(params => {
-      this.id = +params['id']
-    })
+    this.routeSub = this.route.params.subscribe(
+      params => {
+        this.id = +params['id']
+      },
+      // http://stackoverflow.com/a/43471130/1123955
+      error => {
+        this.log.error('Botie', 'ngOnInit() Route.params.subscript() error:%s'
+                              , error
+                      )
+      }
+    )
 
     // TBD: use right bot token
     this.token = this.authService.user.name
