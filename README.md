@@ -101,11 +101,11 @@ $ sudo ln -sf /bin/bash /bin/sh
 
 # Version History
 
-* v0.2 May 2017
+### v0.2 (May 2017)
 
 1. Update to Angular 4
 
-* v0.1.1 Jul 2016
+### v0.1.1 (Jul 2016)
 
 1. Build on Angular 2 Beta
 
