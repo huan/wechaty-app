@@ -13,8 +13,8 @@ export class AuthService {
   loggedIn = false
   redirectUrl: string
 
-  token: string
-  user = {} as User
+  token: string | null  = null
+  user: User | null     = null
 
   constructor(
     private log: Brolog
@@ -23,7 +23,7 @@ export class AuthService {
 
     // TODO: https://toddmotto.com/angular-2-authentication
 
-    this.token = localStorage.getItem('token')
+    this.token = localStorage.getItem('token') || ''
   }
 
   login(username: string, password: string): Observable<string> {
@@ -57,6 +57,9 @@ export class AuthService {
         , pass: password
         , token: username
       }
+    } else {
+      // XXX
+      user = {} as User
     }
 
     if (user) {

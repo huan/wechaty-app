@@ -39,15 +39,15 @@ export interface IoEvent {
 export class IoService {
   private wsProtocol = 'web|0.0.1'
 
-  private websocket: WebSocket
-  private subscriber: Subscriber<IoEvent>
-  private ioSubject: Subject<IoEvent>
+  public websocket: WebSocket | null
+  public subscriber: Subscriber<IoEvent>
+  public ioSubject: Subject<IoEvent>
   private sendBuffer: string[] = []
 
   private config  = this.injector.get(ConfigService)
-  private log     = this.injector.get(Brolog)
+  public log      = this.injector.get(Brolog)
 
-  private autoReconnect = true
+  public autoReconnect = true
 
   constructor(
     private injector: Injector,
@@ -76,7 +76,9 @@ export class IoService {
 
     this.autoReconnect = false
 
-    this.websocket.close(1000, 'IoService.stop()')
+    if (this.websocket) {
+      this.websocket.close(1000, 'IoService.stop()')
+    }
     this.ioSubject.unsubscribe()
     return Promise.resolve(this)
   }
@@ -85,7 +87,7 @@ export class IoService {
     this.log.verbose('IoService', 'initIoSubject()')
 
     return new Promise(resolve => {
-      const observable = Observable.create(subscriber => {
+      const observable = Observable.create((subscriber: any) => {
         this.log.verbose('IoService', 'initIoSubject() Observable.create()')
         this.subscriber = subscriber
 
@@ -137,7 +139,7 @@ export class IoService {
     return this.websocket && (this.websocket.readyState === WebSocket.OPEN)
   }
 
-  ding(payload) {
+  ding(payload: any) {
     this.log.verbose('IoService', 'ding(%s)', payload)
 
     const e: IoEvent = {
@@ -150,14 +152,20 @@ export class IoService {
   wsClose() {
     this.log.verbose('IoService', 'wsClose()')
 
-    this.websocket.close()
-    // this.websocket = null
+    if (this.websocket) {
+      this.websocket.close()
+      this.websocket = null
+    }
   }
 
   wsSend(e: IoEvent) {
     this.log.verbose('IoService', 'wsSend(%s)', e.name)
 
     const message = JSON.stringify(e)
+
+    if (!this.websocket) {
+      throw new Error('no websocket')
+    }
 
     if (this.alive()) {
       // 1. check buffer for send old ones
@@ -166,6 +174,7 @@ export class IoService {
                                     , this.sendBuffer.length
                         )
         const m = this.sendBuffer.shift()
+
         this.websocket.send(m)
       }
       // 2. send this one
@@ -182,7 +191,7 @@ export class IoService {
 
 }
 
-function onOpen(e) {
+function onOpen(this: IoService, e: any) {
   this.log.verbose('IoService', 'onOpen()')
 
   this.log.verbose('IoService', 'onOpen() require update from io')
@@ -196,7 +205,7 @@ function onOpen(e) {
 /**
  * reconnect inside onClose
  */
-function onClose(e) {
+function onClose(this: IoService, e: any) {
   this.log.verbose('IoService', 'onClose(%s)', e)
 
   // this.websocket = null
@@ -211,7 +220,7 @@ function onClose(e) {
   }
 }
 
-function onError(e) {
+function onError(this: IoService, e: any) {
   this.log.silly('IoService', 'onError(%s)', e)
   this.websocket = null
 }
@@ -221,7 +230,7 @@ function onError(e) {
  * this: Subscriber
  *
  */
-function onMessage(message) {
+function onMessage(this: IoService, message: any) {
   const data = message.data // WebSocket data
   this.log.verbose('IoService', 'onMessage(%s)', data)
 

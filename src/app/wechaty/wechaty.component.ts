@@ -53,11 +53,11 @@ export class WechatyComponent implements OnInit, OnDestroy {
   @Input() token = ''
 
   private timer: Observable<any>
-  private timerSub: Subscription
+  private timerSub: Subscription | null = null
   private ioSubscription: any
   private ender: Subject<any>
 
-  private ioService: IoService
+  private ioService: IoService | null = null
 
   counter = 0
 
@@ -99,8 +99,10 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.ioSubscription = null
     }
 
-    this.ioService.stop()
-    this.ioService = null
+    if (this.ioService) {
+      this.ioService.stop()
+      this.ioService = null
+    }
   }
 
   onIo(e: IoEvent) {
@@ -142,23 +144,29 @@ export class WechatyComponent implements OnInit, OnDestroy {
     }
   }
 
-  reset(reason) {
+  reset(reason: string) {
     this.log.verbose('Wechaty', 'reset(%s)', reason)
 
     const resetEvent: IoEvent = {
       name: 'reset'
       , payload: reason
     }
+    if (!this.ioService) {
+      throw new Error('no ioService')
+    }
     this.ioService.io()
         .next(resetEvent)
   }
 
-  shutdown(reason) {
+  shutdown(reason: string) {
     this.log.verbose('Wechaty', 'shutdown(%s)', reason)
 
     const shutdownEvent: IoEvent = {
       name: 'shutdown'
       , payload: reason
+    }
+    if (!this.ioService) {
+      throw new Error('no ioService')
     }
     this.ioService.io()
         .next(shutdownEvent)
@@ -181,6 +189,9 @@ export class WechatyComponent implements OnInit, OnDestroy {
     this.timerSub = this.timer.subscribe(t => {
       this.counter = t
 
+      if (!this.ioService) {
+        throw new Error('no ioService')
+      }
       this.ioService.ding(this.counter)
       // this.message.emit('#' + this.token + ':' + dong)
     })
@@ -194,11 +205,11 @@ export class WechatyComponent implements OnInit, OnDestroy {
       this.timerSub.unsubscribe()
       this.timerSub = null
     }
-    this.timer = null
+    // this.timer = null
 
     if (this.ender) {
       this.ender.next(null)
-      this.ender = null
+      // this.ender = null
     }
   }
 

@@ -8,7 +8,9 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "npm run lint && npm run unit:single && npm run e2e",
-    "lint": "ng lint",
+    "lint": "npm run nglint && npm run tslint",
+    "nglint": "ng lint",
+    "tslint": "tslint src/**/*.ts && tsc --noEmit",
     "unit:single": "ng test --single-run",
     "unit": "ng test",
     "e2e": "ng e2e"
@@ -18,7 +20,6 @@
     "start:fg": "ng serve --live-reload-port=8081",
     "stop": "ps ax | grep angular-cli | grep -v grep && killall angular-cli || echo 'no angular-cli need kill'",
     "postinstall": "typings install",
-    "lint": "tslint src/**/*.ts",
     "test": "npm run lint && npm run unit && npm run e2e",
     "unit": "ng test --watch=false",
     "pree2e": "npm start && webdriver-manager update",
@@ -59,7 +60,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
-    "tslint": "~4.5.0",
+    "tslint": "^4.5.1",
     "typescript": "^2.3.2"
   },
   "repository": {

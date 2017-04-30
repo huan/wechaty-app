@@ -32,10 +32,10 @@ import { AuthGuardService } from '../auth-guard.service'
 
 export class BotieComponent implements OnInit, OnDestroy {
   id: number
-  token: string
+  token: string | null
   messages: string[] = []
-  scan: ScanInfo
-  user: UserInfo
+  scan: ScanInfo | null = null
+  user: UserInfo | null = null
   hbCounter = 0
 
   routeSub: Subscription
@@ -64,7 +64,7 @@ export class BotieComponent implements OnInit, OnDestroy {
     )
 
     // TBD: use right bot token
-    this.token = this.authService.user.name
+    this.token = this.authService.user && this.authService.user.name
   }
 
   ngOnDestroy() {
@@ -74,11 +74,11 @@ export class BotieComponent implements OnInit, OnDestroy {
     }
   }
 
-  onMessage(e) {
+  onMessage(e: any) {
     this.log.verbose('Botie', 'onMessage(%s)', e)
     this.messages.push(e)
   }
-  onHeartbeat(e) {
+  onHeartbeat(e: any) {
     this.log.silly('Botie', 'onHeartbeat(%s)', e)
     this.hbCounter++
     // this.messages.push(e)
