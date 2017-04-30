@@ -33,7 +33,7 @@
       "single",
       "avoid-escape"
     ],
-    "semicolon": false,
+    "semicolon": [false],
     "typedef-whitespace": [
       true,
       {
