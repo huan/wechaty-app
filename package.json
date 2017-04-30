@@ -7,8 +7,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "npm run lint && npm run unit:single && npm run e2e",
     "lint": "ng lint",
+    "unit:single": "ng test --single-run",
+    "unit": "ng test",
     "e2e": "ng e2e"
   },
   "oldScripts": {
