@@ -1,23 +1,26 @@
 import {
-  Component
-  , OnInit
-  , OnDestroy
-  , EventEmitter
-  , Input
-  , Output
-  , NgZone
-  , Injector
-} from '@angular/core'
+  Component,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Input,
+  Output,
+  NgZone,
+  Injector,
+}                   from '@angular/core'
 
 import {
-  Observable
-  , Subject
-  , Subscription
-} from 'rxjs/Rx'
+  Observable,
+  Subject,
+  Subscription,
+}                   from 'rxjs/Rx'
 
-import { Brolog } from 'brolog'
+import { Brolog }   from 'brolog'
 
-import { IoService, IoEvent } from './io.service'
+import {
+  IoService,
+  IoEvent,
+}                   from './io'
 
 /**
  * for payload
@@ -47,19 +50,24 @@ export class WechatyComponent implements OnInit, OnDestroy {
   @Output() scan      = new EventEmitter<ScanInfo>()
   @Output() login     = new EventEmitter<UserInfo>()
   @Output() logout    = new EventEmitter<UserInfo>()
-  @Output() error     = new EventEmitter<any>()
+  @Output() error     = new EventEmitter<Error>()
   @Output() heartbeat = new EventEmitter<any>()
 
-  @Input() token = ''
+  @Input() set token(token: string) { this.updateToken(token) }
+  get token() { return this._token }
+  private _token: string
 
   private timer: Observable<any>
   private timerSub: Subscription | null = null
-  private ioSubscription: any
+  private ioSubscription: Subscription
   private ender: Subject<any>
 
-  private ioService: IoService | null = null
+  private ioService: IoService
+
+  private npmVersion: string = 'TODO: support version'
 
   counter = 0
+  timestamp = new Date()
 
   constructor(
     private ngZone: NgZone,
@@ -67,23 +75,20 @@ export class WechatyComponent implements OnInit, OnDestroy {
     private injector: Injector,
   ) {
     this.log.verbose('Wechaty', 'constructor()')
+
+    this.ioService = new IoService(this.injector)
   }
 
   ngOnInit() {
     this.log.verbose('Wechaty', 'ngOninit() with token: ' + this.token)
 
     /**
-     * IoService must be put inside OnInit
-     * because it used @Input(token)
-     * which is not inittialized in constructor()
+     * @Input(token) is not inittialized in constructor()
      */
-    const ioService = this.ioService = new IoService(
-      this.injector,
-      this.token,
-    )
-    ioService.start()
+    this.ioService.setToken(this.token)
+    this.ioService.start()
 
-    this.ioSubscription = ioService.io()
+    this.ioSubscription = this.ioService.io()
                           .subscribe(this.onIo.bind(this))
 
     // this.startTimer()
@@ -96,17 +101,18 @@ export class WechatyComponent implements OnInit, OnDestroy {
 
     if (this.ioSubscription) {
       this.ioSubscription.unsubscribe()
-      this.ioSubscription = null
+      // this.ioSubscription = null
     }
 
     if (this.ioService) {
       this.ioService.stop()
-      this.ioService = null
+      // this.ioService = null
     }
   }
 
   onIo(e: IoEvent) {
     this.log.silly('Wechaty', 'onIo#%d(%s)', this.counter++, e.name)
+    this.timestamp = new Date()
 
     switch (e.name) {
       case 'scan':
@@ -144,7 +150,21 @@ export class WechatyComponent implements OnInit, OnDestroy {
     }
   }
 
-  reset(reason: string) {
+  private updateToken(token: string) {
+    this.log.silly('WechatyCoreCmp', 'set token(%s)', token)
+    if (token && this._token === token) {
+      return
+    }
+    this._token = token.trim()
+
+    if (!this.ioSubscription) {
+      return
+    }
+    this.ioService.setToken(this._token)
+    this.ioService.restart()
+  }
+
+  public reset(reason: string) {
     this.log.verbose('Wechaty', 'reset(%s)', reason)
 
     const resetEvent: IoEvent = {
@@ -158,7 +178,7 @@ export class WechatyComponent implements OnInit, OnDestroy {
         .next(resetEvent)
   }
 
-  shutdown(reason: string) {
+  public shutdown(reason: string) {
     this.log.verbose('Wechaty', 'shutdown(%s)', reason)
 
     const shutdownEvent: IoEvent = {
@@ -213,4 +233,28 @@ export class WechatyComponent implements OnInit, OnDestroy {
     }
   }
 
+  logoff(reason?: string) { // use the name `logoff` here to prevent conflict with @Output(logout)
+    this.log.silly('WechatyCoreCmp', 'logoff(%s)', reason)
+
+    const quitEvent: IoEvent = {
+      name: 'logout'
+      , payload: reason
+    }
+    this.ioService.io()
+        .next(quitEvent)
+  }
+
+  online(): boolean {
+    return this.ioService.online()
+  }
+
+  connecting(): boolean {
+    return this.ioService.connecting()
+  }
+
+  offline(): boolean {
+    return !(this.online() || this.connecting())
+  }
+
+  version() { return this.npmVersion}
 }

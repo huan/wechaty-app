@@ -15,10 +15,10 @@ import {
 import { Brolog } from 'brolog'
 
 import {
-  WechatyComponent
-  , ScanInfo
-  , UserInfo
-} from '../wechaty/wechaty.component'
+  WechatyComponent,
+  ScanInfo,
+  UserInfo,
+} from '../wechaty/wechaty.module'
 
 import { AuthService } from '../auth.service'
 import { AuthGuardService } from '../auth-guard.service'
@@ -56,11 +56,7 @@ export class BotieComponent implements OnInit, OnDestroy {
         this.id = +params['id']
       },
       // http://stackoverflow.com/a/43471130/1123955
-      error => {
-        this.log.error('Botie', 'ngOnInit() Route.params.subscript() error:%s'
-                              , error
-                      )
-      }
+      error => this.log.error('Botie', 'ngOnInit() Route.params.subscript() error:%s', error)
     )
 
     // TBD: use right bot token

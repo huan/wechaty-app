@@ -35,35 +35,46 @@ export interface IoEvent {
 }
 
 export class IoService {
-  private wsProtocol = 'web|0.0.1'
+  private ENDPOINT = 'wss://api.wechaty.io/v0/websocket/token/'
+  private PROTOCOL = 'web|0.0.1'
 
   public websocket: WebSocket | null
   public subscriber: Subscriber<IoEvent>
   public ioSubject: Subject<IoEvent>
   private sendBuffer: string[] = []
 
-  public log      = this.injector.get(Brolog)
+  public log: Brolog
+  private token: string
 
   public autoReconnect = true
 
   constructor(
     private injector: Injector,
-    private token:    string,
    ) {
-    this.log.verbose('IoService', 'constructor(%s)', token)
+    this.log.verbose('IoService', 'constructor()')
     // console.log(injector)
+
+    this.log = this.injector.get(Brolog)
+  }
+
+  public setToken(token: string) {
+    this.log.silly('IoService', 'setToken(%s)', token)
+    this.token = token
   }
 
   start(): Promise<IoService> {
-    this.log.verbose('IoService', 'start()')
+    this.log.silly('IoService', 'start() with token:[%s]', this.token)
 
+    if (!this.token){
+      this.log.warn('IoService', 'start() without valid token:[%s]', this.token)
+    }
     this.autoReconnect = true
 
     return this.initIoSubject()
     .then(_ => this.initWebSocket())
     .then(_ => this)
     .catch(e => {
-      this.log.verbose('IoService', 'start() exception: %s', e.message)
+      this.log.silly('IoService', 'start() exception: %s', e.message)
       throw e
     })
   }
@@ -76,8 +87,15 @@ export class IoService {
     if (this.websocket) {
       this.websocket.close(1000, 'IoService.stop()')
     }
-    this.ioSubject.unsubscribe()
+    if (this.ioSubject) {
+      this.ioSubject.unsubscribe()
+    }
     return Promise.resolve(this)
+  }
+
+  restart(): Promise<IoService> {
+    this.log.silly('IoService', 'restart()')
+    return this.stop().then(_ => this.start())
   }
 
   initIoSubject() {
@@ -104,14 +122,14 @@ export class IoService {
     })
   }
 
-  initWebSocket() {
-    this.log.verbose('IoService', 'initWebSocket()')
+  public initWebSocket() {
+    this.log.silly('IoService', 'initWebSocket() with token:[%s]', this.token)
 
-    if (this.websocket) {
-      this.log.warn('IoService', 'initWebSocket() there already has a websocket')
+    if (this.online()) {
+      this.log.warn('IoService', 'initWebSocket() there already has a live websocket. will go ahead and overwrite it')
     }
 
-    this.websocket = new WebSocket(this.endPoint(), this.wsProtocol)
+    this.websocket = new WebSocket(this.endPoint(), this.PROTOCOL)
 
     this.websocket.onerror = onError.bind(this)
     this.websocket.onopen  = onOpen.bind(this)
@@ -121,20 +139,29 @@ export class IoService {
     this.websocket.onmessage = onMessage.bind(this)
   }
 
+  online(): boolean {
+    if (this.websocket && (this.websocket.readyState === WebSocket.OPEN)) {
+      return true
+    }
+    return false
+  }
+  connecting(): boolean {
+    if (this.websocket && (this.websocket.readyState === WebSocket.CONNECTING)) {
+      return true
+    }
+    return false
+  }
+
   io() {
     return this.ioSubject
   }
 
-  endPoint(): string {
+  private endPoint(): string {
     const END_POINT = 'wss://api.chatie.io/websocket/token/'
 
     const url = END_POINT + this.token
     this.log.verbose('IoService', 'endPoint() => %s', url)
     return url
-  }
-
-  alive() {
-    return this.websocket && (this.websocket.readyState === WebSocket.OPEN)
   }
 
   ding(payload: any) {
@@ -156,23 +183,20 @@ export class IoService {
     }
   }
 
-  wsSend(e: IoEvent) {
-    this.log.verbose('IoService', 'wsSend(%s)', e.name)
+  private wsSend(e: IoEvent) {
+    this.log.silly('IoService', 'wsSend(%s)', e.name)
 
     const message = JSON.stringify(e)
 
-    if (!this.websocket) {
-      throw new Error('no websocket')
-    }
-
-    if (this.alive()) {
+    if (this.online()) {
+      if (!this.websocket) {
+        throw new Error('no websocket')
+      }
       // 1. check buffer for send old ones
       while (this.sendBuffer.length) {
-        this.log.verbose('IoService', 'wsSend() buffer processing: length: %d'
-                                    , this.sendBuffer.length
-                        )
-        const m = this.sendBuffer.shift()
+        this.log.silly('IoService', 'wsSend() buffer processing: length: %d', this.sendBuffer.length)
 
+        const m = this.sendBuffer.shift()
         this.websocket.send(m)
       }
       // 2. send this one
@@ -180,13 +204,9 @@ export class IoService {
 
     } else { // 3. buffer this message for future retry
       this.sendBuffer.push(message)
-      this.log.verbose('IoService'
-                        , 'wsSend() without WebSocket.OPEN, buf len: %d'
-                        , this.sendBuffer.length
-                      )
+      this.log.silly('IoService', 'wsSend() without WebSocket.OPEN, buf len: %d', this.sendBuffer.length)
     }
   }
-
 }
 
 function onOpen(this: IoService, e: any) {
