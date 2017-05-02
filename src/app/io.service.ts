@@ -4,17 +4,17 @@
 
 import {
   Injector
-} from '@angular/core'
+}                         from '@angular/core'
 
 import {
-  Observable
-  , Subscriber
-  , Subject
-} from 'rxjs/Rx'
+  Observable,
+  Subscriber,
+  Subject,
+}                         from 'rxjs/Rx'
 
-import { Brolog } from 'brolog'
+import { Brolog }         from 'brolog'
 
-import { ConfigService } from './config.service'
+import { ConfigService }  from './config.service'
 
 export type WechatyEventName =
   'scan'
