@@ -17,7 +17,7 @@ import {
 
 import { Brolog } from 'brolog'
 
-import { IoService, IoEvent } from '../io.service'
+import { IoService, IoEvent } from './io.service'
 
 /**
  * for payload

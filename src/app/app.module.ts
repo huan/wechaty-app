@@ -7,15 +7,16 @@ import { Brolog }             from 'brolog'
 import { AppComponent }       from './app.component';
 import { AppRoutingModule }   from './app-routing.module';
 
+import { WechatyModule }      from './wechaty/wechaty.module'
+
 import { AuthService }        from './auth.service'
 import { AuthGuardService }   from './auth-guard.service';
-import { ConfigService }      from './config.service'
+
 
 import { NotFoundComponent }  from './not-found/not-found.component';
 import { LoginComponent }     from './login/login.component';
 import { AboutComponent }     from './about/about.component';
 import { BotieComponent }     from './botie/botie.component';
-import { WechatyComponent }   from './wechaty/wechaty.component'
 
 @NgModule({
   declarations: [
@@ -24,12 +25,13 @@ import { WechatyComponent }   from './wechaty/wechaty.component'
     LoginComponent,
     AboutComponent,
     BotieComponent,
-    WechatyComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    WechatyModule,
+    // Routing should be last
     AppRoutingModule,
   ],
   providers: [
@@ -38,7 +40,6 @@ import { WechatyComponent }   from './wechaty/wechaty.component'
     { provide: Brolog,
       useFactory() { return Brolog.instance('silly') },
     },
-    ConfigService,
   ],
   bootstrap: [AppComponent]
 })

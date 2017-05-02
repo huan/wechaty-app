@@ -14,8 +14,6 @@ import {
 
 import { Brolog }         from 'brolog'
 
-import { ConfigService }  from './config.service'
-
 export type WechatyEventName =
   'scan'
   | 'login' | 'logout'
@@ -44,7 +42,6 @@ export class IoService {
   public ioSubject: Subject<IoEvent>
   private sendBuffer: string[] = []
 
-  private config  = this.injector.get(ConfigService)
   public log      = this.injector.get(Brolog)
 
   public autoReconnect = true
@@ -129,9 +126,10 @@ export class IoService {
   }
 
   endPoint(): string {
-    const url = this.config.ioEndPoint + this.token
+    const END_POINT = 'wss://api.chatie.io/websocket/token/'
+
+    const url = END_POINT + this.token
     this.log.verbose('IoService', 'endPoint() => %s', url)
-    this.log.verbose('IoService', 'endPoint() config => %s', JSON.stringify(this.config))
     return url
   }
 
