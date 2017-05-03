@@ -2,7 +2,7 @@
   "name": "wechaty-app",
   "version": "0.1.0",
   "description": "Wechaty APP",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -42,6 +42,7 @@
     "brolog": "^1.0.15",
     "core-js": "^2.4.1",
     "rxjs": "^5.1.0",
+    "state-switch": "^0.1.9",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
