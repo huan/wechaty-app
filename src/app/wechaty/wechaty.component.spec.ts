@@ -2,8 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Brolog } from 'brolog'
 
-import { ConfigService }  from '../config.service'
-
 import { WechatyComponent } from './wechaty.component';
 
 describe('WechatyComponent', () => {
@@ -15,7 +13,6 @@ describe('WechatyComponent', () => {
       declarations: [ WechatyComponent ],
       providers: [
         Brolog,
-        ConfigService,
       ]
     })
     .compileComponents();

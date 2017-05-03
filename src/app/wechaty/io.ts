@@ -43,7 +43,7 @@ export class IoService {
   public ioSubject: Subject<IoEvent>
   private sendBuffer: string[] = []
 
-  public log: Brolog
+  public log = Brolog.instance()
   private token: string
 
   public autoReconnect = true
@@ -53,8 +53,6 @@ export class IoService {
    ) {
     this.log.verbose('IoService', 'constructor()')
     // console.log(injector)
-
-    this.log = this.injector.get(Brolog)
   }
 
   public setToken(token: string) {
