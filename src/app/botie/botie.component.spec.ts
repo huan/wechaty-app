@@ -3,9 +3,9 @@ import { RouterTestingModule }  from '@angular/router/testing'
 import { Brolog }           from 'brolog'
 
 import { AuthService }      from '../auth.service'
-import { ConfigService }    from '../config.service'
 
-import { WechatyComponent } from '../wechaty/wechaty.component'
+import { WechatyComponent } from '@chatie/angular'
+
 import { BotieComponent } from './botie.component';
 
 describe('BotieComponent', () => {
@@ -22,7 +22,6 @@ describe('BotieComponent', () => {
       providers: [
         AuthService,
         Brolog,
-        ConfigService,
       ]
     })
     .compileComponents();

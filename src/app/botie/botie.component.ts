@@ -2,25 +2,25 @@ import {
   Component
   , OnInit
   , OnDestroy
- } from '@angular/core'
+ }                          from '@angular/core'
 
 import {
   ActivatedRoute
-} from '@angular/router'
+}                           from '@angular/router'
 
 import {
   Subscription
-} from 'rxjs/Subscription'
+}                           from 'rxjs/Subscription'
 
-import { Brolog } from 'brolog'
+import { Brolog }           from 'brolog'
 
 import {
   WechatyComponent,
   ScanInfo,
   UserInfo,
-} from '../wechaty/wechaty.module'
+}                           from '@chatie/angular'
 
-import { AuthService } from '../auth.service'
+import { AuthService }      from '../auth.service'
 import { AuthGuardService } from '../auth-guard.service'
 
 @Component({
