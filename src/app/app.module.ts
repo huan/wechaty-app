@@ -7,11 +7,12 @@ import { Brolog }             from 'brolog'
 import { AppComponent }       from './app.component';
 import { AppRoutingModule }   from './app-routing.module';
 
-import { WechatyModule }      from './wechaty/wechaty.module'
+import { WechatyModule }      from '@chatie/angular'
+// import { WechatyModule }      from './wechaty/wechaty.module'
+// import { WechatyModule }      from '/home/zixia/chatie/angular/'
 
 import { AuthService }        from './auth.service'
 import { AuthGuardService }   from './auth-guard.service';
-
 
 import { NotFoundComponent }  from './not-found/not-found.component';
 import { LoginComponent }     from './login/login.component';
