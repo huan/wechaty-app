@@ -39,7 +39,7 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
-    "@chatie/angular": "^0.1.6",
+    "@chatie/angular": "^0.1.8",
     "brolog": "^1.0.15",
     "core-js": "^2.4.1",
     "rxjs": "^5.1.0",
