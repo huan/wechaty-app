@@ -8,8 +8,6 @@ import { AppComponent }       from './app.component';
 import { AppRoutingModule }   from './app-routing.module';
 
 import { WechatyModule }      from '@chatie/angular'
-// import { WechatyModule }      from './wechaty/wechaty.module'
-// import { WechatyModule }      from '/home/zixia/chatie/angular/'
 
 import { AuthService }        from './auth.service'
 import { AuthGuardService }   from './auth-guard.service';
