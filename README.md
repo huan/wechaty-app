@@ -1,6 +1,6 @@
 # Wechaty APP
 
-[![Build Status](https://travis-ci.org/zixia/wechaty-app.svg?branch=master)](https://travis-ci.org/zixia/wechaty-app) [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard.svg)](http://definitelytyped.org)
+[![Build Status](https://travis-ci.org/zixia/wechaty-app.svg?branch=master)](https://travis-ci.org/zixia/wechaty-app) [![TypeScript definitions on DefinitelyTyped](http://definitelytyped.org/badges/standard.svg)](http://definitelytyped.org) [![Greenkeeper badge](https://badges.greenkeeper.io/zixia/wechaty-app.svg)](https://greenkeeper.io/)
 
 Wechaty APP Web Component
 
